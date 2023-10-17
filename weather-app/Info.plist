@@ -6,8 +6,10 @@
 	<array>
 		<string>SF-Pro.ttf</string>
 		<string>SF-Pro-Display-Bold.otf</string>
-		<string>SF-Pro-DisplayMedium.otf</string>
-		<string>SFProDisplay-Regular.otf</string>
+		<string>SF-Pro-Display-Medium.otf</string>
+		<string>SF-Pro-Display-Regular.otf</string>
+		<string>SF-Pro-Display-Thin.otf</string>
+		<string>SF-Pro-Display-Light.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
