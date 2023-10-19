@@ -12,6 +12,8 @@
 		CA8453282ADD999800A3109A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8453272ADD999800A3109A /* ViewController.swift */; };
 		CA84532D2ADD999900A3109A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA84532C2ADD999900A3109A /* Assets.xcassets */; };
 		CA8453302ADD999900A3109A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA84532E2ADD999900A3109A /* LaunchScreen.storyboard */; };
+		CA871B452ADFDE78003C7EA8 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */; };
+		CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */; };
 		CABB519F2ADD9FC00074ACDD /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CABB519E2ADD9FC00074ACDD /* SF-Pro.ttf */; };
 		CABB51A32ADDACE00074ACDD /* weatherInfoBg.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A12ADDACE00074ACDD /* weatherInfoBg.png */; };
 		CABB51A42ADDACE00074ACDD /* mainBg.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A22ADDACE00074ACDD /* mainBg.png */; };
@@ -40,6 +42,8 @@
 		CA84532C2ADD999900A3109A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA84532F2ADD999900A3109A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA8453312ADD999900A3109A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
 		CABB519E2ADD9FC00074ACDD /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		CABB51A12ADDACE00074ACDD /* weatherInfoBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weatherInfoBg.png; sourceTree = "<group>"; };
 		CABB51A22ADDACE00074ACDD /* mainBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainBg.png; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				CA84532C2ADD999900A3109A /* Assets.xcassets */,
 				CA84532E2ADD999900A3109A /* LaunchScreen.storyboard */,
 				CA8453312ADD999900A3109A /* Info.plist */,
+				CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */,
 			);
 			path = "weather-app";
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 		CABB519D2ADD9F540074ACDD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */,
 				CABB51C12ADDB6550074ACDD /* SF-Pro-Display-Regular.otf */,
 				CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */,
 				CABB51BD2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf */,
@@ -206,6 +212,7 @@
 				CABB51B92ADDAD2F0074ACDD /* Frame 5.svg in Resources */,
 				CABB51B82ADDAD2F0074ACDD /* Frame 9.svg in Resources */,
 				CABB51B32ADDAD2F0074ACDD /* Frame 6.svg in Resources */,
+				CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */,
 				CABB51BA2ADDAD2F0074ACDD /* Frame 8.svg in Resources */,
 				CABB51B22ADDAD2F0074ACDD /* Frame 10.svg in Resources */,
 				CABB51BC2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf in Resources */,
@@ -223,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA8453282ADD999800A3109A /* ViewController.swift in Sources */,
+				CA871B452ADFDE78003C7EA8 /* WeatherViewController.swift in Sources */,
 				CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */,
 				CA8453262ADD999800A3109A /* SceneDelegate.swift in Sources */,
 			);

@@ -28,9 +28,9 @@ class ViewController: UIViewController {
         let rightStackView = UIStackView()
         rightStackView.axis = .vertical
         rightStackView.distribution = .fillEqually
-
         rightStackView.backgroundColor = .clear
         rightStackView.layer.cornerRadius = 10
+        rightStackView.isLayoutMarginsRelativeArrangement = true
         return rightStackView
     }()
     private var blankView1 = UILabel()
@@ -48,22 +48,9 @@ class ViewController: UIViewController {
         setComponentLayout()
         setSearchBarLayout()
         setWeatherInfoLayout()
-        getFontName()
     }
     
-    func getFontName() {
-        for family in UIFont.familyNames {
-
-            let sName: String = family as String
-            print("family: \(sName)")
-                    
-            for name in UIFont.fontNames(forFamilyName: sName) {
-                print("name: \(name as String)")
-            }
-        }
-    }
-    
-    private func setViewLayout(){
+     func setViewLayout(){
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.backgroundColor = .black
@@ -142,12 +129,13 @@ class ViewController: UIViewController {
             leftStackView.addArrangedSubview(i)
             i.backgroundColor = .clear
             i.textColor = .white
-
-            NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: leftStackView.widthAnchor),i.leadingAnchor.constraint(equalTo: leftStackView.leadingAnchor, constant: 14)])
+            i.adjustsFontSizeToFitWidth = true
+            NSLayoutConstraint.activate([i.leadingAnchor.constraint(equalTo: leftStackView.leadingAnchor, constant: 14)])
         }
+        
         myLocation.text = "나의 위치"
         myLocation.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: leftStackView.topAnchor, constant: 4)])
+        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: leftStackView.topAnchor, constant: 0)])
         
         city.text = "의정부시"
         city.font = UIFont(name: "SFProDisplay-Medium", size: 17)
@@ -168,6 +156,7 @@ class ViewController: UIViewController {
 
             NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: rightStackView.widthAnchor),i.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: 14)])
         }
+        
         temperatures.text = "21º"
         temperatures.textAlignment = .right
         temperatures.font = UIFont(name: "SFProDisplay-Light", size: 52)
@@ -184,12 +173,12 @@ class ViewController: UIViewController {
 }
 
 extension UIView {
-        func addSubViews(_ views: UIView...) {
-                views.forEach {
-                    $0.translatesAutoresizingMaskIntoConstraints = false
-                    self.addSubview($0)
-                }
+    public func addSubViews(_ views: UIView...) {
+        views.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
         }
+    }
 }
 
 extension UITextField {
