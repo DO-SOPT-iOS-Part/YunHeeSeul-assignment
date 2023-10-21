@@ -15,19 +15,6 @@
 		CA871B452ADFDE78003C7EA8 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */; };
 		CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */; };
 		CABB519F2ADD9FC00074ACDD /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CABB519E2ADD9FC00074ACDD /* SF-Pro.ttf */; };
-		CABB51A32ADDACE00074ACDD /* weatherInfoBg.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A12ADDACE00074ACDD /* weatherInfoBg.png */; };
-		CABB51A42ADDACE00074ACDD /* mainBg.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A22ADDACE00074ACDD /* mainBg.png */; };
-		CABB51B02ADDAD2F0074ACDD /* Frame 12.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A52ADDAD2F0074ACDD /* Frame 12.svg */; };
-		CABB51B12ADDAD2F0074ACDD /* Frame 7.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A62ADDAD2F0074ACDD /* Frame 7.svg */; };
-		CABB51B22ADDAD2F0074ACDD /* Frame 10.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A72ADDAD2F0074ACDD /* Frame 10.svg */; };
-		CABB51B32ADDAD2F0074ACDD /* Frame 6.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A82ADDAD2F0074ACDD /* Frame 6.svg */; };
-		CABB51B42ADDAD2F0074ACDD /* Frame 2.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51A92ADDAD2F0074ACDD /* Frame 2.svg */; };
-		CABB51B52ADDAD2F0074ACDD /* Frame 11.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AA2ADDAD2F0074ACDD /* Frame 11.svg */; };
-		CABB51B62ADDAD2F0074ACDD /* Frame 3.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AB2ADDAD2F0074ACDD /* Frame 3.svg */; };
-		CABB51B72ADDAD2F0074ACDD /* Frame 4.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AC2ADDAD2F0074ACDD /* Frame 4.svg */; };
-		CABB51B82ADDAD2F0074ACDD /* Frame 9.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AD2ADDAD2F0074ACDD /* Frame 9.svg */; };
-		CABB51B92ADDAD2F0074ACDD /* Frame 5.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AE2ADDAD2F0074ACDD /* Frame 5.svg */; };
-		CABB51BA2ADDAD2F0074ACDD /* Frame 8.svg in Resources */ = {isa = PBXBuildFile; fileRef = CABB51AF2ADDAD2F0074ACDD /* Frame 8.svg */; };
 		CABB51BC2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51BB2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf */; };
 		CABB51BE2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51BD2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf */; };
 		CABB51C02ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */; };
@@ -45,19 +32,6 @@
 		CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
 		CABB519E2ADD9FC00074ACDD /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
-		CABB51A12ADDACE00074ACDD /* weatherInfoBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weatherInfoBg.png; sourceTree = "<group>"; };
-		CABB51A22ADDACE00074ACDD /* mainBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainBg.png; sourceTree = "<group>"; };
-		CABB51A52ADDAD2F0074ACDD /* Frame 12.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 12.svg"; sourceTree = "<group>"; };
-		CABB51A62ADDAD2F0074ACDD /* Frame 7.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 7.svg"; sourceTree = "<group>"; };
-		CABB51A72ADDAD2F0074ACDD /* Frame 10.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 10.svg"; sourceTree = "<group>"; };
-		CABB51A82ADDAD2F0074ACDD /* Frame 6.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 6.svg"; sourceTree = "<group>"; };
-		CABB51A92ADDAD2F0074ACDD /* Frame 2.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 2.svg"; sourceTree = "<group>"; };
-		CABB51AA2ADDAD2F0074ACDD /* Frame 11.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 11.svg"; sourceTree = "<group>"; };
-		CABB51AB2ADDAD2F0074ACDD /* Frame 3.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 3.svg"; sourceTree = "<group>"; };
-		CABB51AC2ADDAD2F0074ACDD /* Frame 4.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 4.svg"; sourceTree = "<group>"; };
-		CABB51AD2ADDAD2F0074ACDD /* Frame 9.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 9.svg"; sourceTree = "<group>"; };
-		CABB51AE2ADDAD2F0074ACDD /* Frame 5.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 5.svg"; sourceTree = "<group>"; };
-		CABB51AF2ADDAD2F0074ACDD /* Frame 8.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Frame 8.svg"; sourceTree = "<group>"; };
 		CABB51BB2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		CABB51BD2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
@@ -94,17 +68,39 @@
 		CA8453222ADD999800A3109A /* weather-app */ = {
 			isa = PBXGroup;
 			children = (
-				CABB51A02ADDAC280074ACDD /* Assets */,
-				CABB519D2ADD9F540074ACDD /* Fonts */,
-				CA8453232ADD999800A3109A /* AppDelegate.swift */,
-				CA8453252ADD999800A3109A /* SceneDelegate.swift */,
-				CA8453272ADD999800A3109A /* ViewController.swift */,
+				CA8735E22AE44126001E136E /* Source */,
+				CABB51A02ADDAC280074ACDD /* Resource */,
 				CA84532C2ADD999900A3109A /* Assets.xcassets */,
 				CA84532E2ADD999900A3109A /* LaunchScreen.storyboard */,
 				CA8453312ADD999900A3109A /* Info.plist */,
-				CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */,
 			);
 			path = "weather-app";
+			sourceTree = "<group>";
+		};
+		CA8735E02AE440D5001E136E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CA8735E22AE44126001E136E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CA8453232ADD999800A3109A /* AppDelegate.swift */,
+				CA8453252ADD999800A3109A /* SceneDelegate.swift */,
+				CA8735E32AE4413C001E136E /* ViewControllers */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		CA8735E32AE4413C001E136E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA871B442ADFDE78003C7EA8 /* WeatherViewController.swift */,
+				CA8453272ADD999800A3109A /* ViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		CABB519D2ADD9F540074ACDD /* Fonts */ = {
@@ -120,24 +116,13 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		CABB51A02ADDAC280074ACDD /* Assets */ = {
+		CABB51A02ADDAC280074ACDD /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				CABB51A92ADDAD2F0074ACDD /* Frame 2.svg */,
-				CABB51AB2ADDAD2F0074ACDD /* Frame 3.svg */,
-				CABB51AC2ADDAD2F0074ACDD /* Frame 4.svg */,
-				CABB51AE2ADDAD2F0074ACDD /* Frame 5.svg */,
-				CABB51A82ADDAD2F0074ACDD /* Frame 6.svg */,
-				CABB51A62ADDAD2F0074ACDD /* Frame 7.svg */,
-				CABB51AF2ADDAD2F0074ACDD /* Frame 8.svg */,
-				CABB51AD2ADDAD2F0074ACDD /* Frame 9.svg */,
-				CABB51A72ADDAD2F0074ACDD /* Frame 10.svg */,
-				CABB51AA2ADDAD2F0074ACDD /* Frame 11.svg */,
-				CABB51A52ADDAD2F0074ACDD /* Frame 12.svg */,
-				CABB51A22ADDACE00074ACDD /* mainBg.png */,
-				CABB51A12ADDACE00074ACDD /* weatherInfoBg.png */,
+				CA8735E02AE440D5001E136E /* Extensions */,
+				CABB519D2ADD9F540074ACDD /* Fonts */,
 			);
-			path = Assets;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,26 +184,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA8453302ADD999900A3109A /* LaunchScreen.storyboard in Resources */,
-				CABB51A42ADDACE00074ACDD /* mainBg.png in Resources */,
-				CABB51B42ADDAD2F0074ACDD /* Frame 2.svg in Resources */,
-				CABB51B62ADDAD2F0074ACDD /* Frame 3.svg in Resources */,
 				CABB51BE2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf in Resources */,
-				CABB51B02ADDAD2F0074ACDD /* Frame 12.svg in Resources */,
-				CABB51B52ADDAD2F0074ACDD /* Frame 11.svg in Resources */,
-				CABB51B12ADDAD2F0074ACDD /* Frame 7.svg in Resources */,
-				CABB51A32ADDACE00074ACDD /* weatherInfoBg.png in Resources */,
 				CABB519F2ADD9FC00074ACDD /* SF-Pro.ttf in Resources */,
 				CABB51C02ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf in Resources */,
-				CABB51B92ADDAD2F0074ACDD /* Frame 5.svg in Resources */,
-				CABB51B82ADDAD2F0074ACDD /* Frame 9.svg in Resources */,
-				CABB51B32ADDAD2F0074ACDD /* Frame 6.svg in Resources */,
 				CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */,
-				CABB51BA2ADDAD2F0074ACDD /* Frame 8.svg in Resources */,
-				CABB51B22ADDAD2F0074ACDD /* Frame 10.svg in Resources */,
 				CABB51BC2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf in Resources */,
 				CA84532D2ADD999900A3109A /* Assets.xcassets in Resources */,
 				CABB51C22ADDB6550074ACDD /* SF-Pro-Display-Regular.otf in Resources */,
-				CABB51B72ADDAD2F0074ACDD /* Frame 4.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
