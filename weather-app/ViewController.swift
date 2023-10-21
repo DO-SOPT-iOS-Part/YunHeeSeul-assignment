@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private var contentView = UIView()
     private var menuBtn = UIButton()
     private var titleText = UILabel()
-    private var searchTextfield = UITextField()
+    private var searchBar = UISearchBar()
     private var searchImageView = UIImageView()
     private var leftStackView: UIStackView = {
         let leftStackView = UIStackView()
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         
         menuBtn.setBackgroundImage(UIImage(named: "menu"), for: .normal)
         NSLayoutConstraint.activate([menuBtn.topAnchor.constraint(equalTo: contentView.topAnchor),
-                                     menuBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                                     menuBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                                      menuBtn.widthAnchor.constraint(equalToConstant: 42),
                                      menuBtn.heightAnchor.constraint(equalToConstant: 42)])
         
@@ -87,37 +87,34 @@ class ViewController: UIViewController {
         titleText.font = UIFont(name: "SFProDisplay-Bold", size: 36)
         titleText.backgroundColor = .black
         titleText.textColor = .white
-        NSLayoutConstraint.activate([titleText.topAnchor.constraint(equalTo: menuBtn.bottomAnchor, constant: 10), titleText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+        NSLayoutConstraint.activate([titleText.topAnchor.constraint(equalTo: menuBtn.bottomAnchor, constant: 10), titleText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                                      titleText.widthAnchor.constraint(equalTo: contentView.widthAnchor),
                                      titleText.heightAnchor.constraint(equalToConstant: 44)])
     }
     
     private func setSearchBarLayout(){
-        contentView.addSubViews(searchTextfield)
-        searchImageView.image = UIImage(named: "search")
-        searchTextfield.leftViewMode = .always
-        searchTextfield.addLeftPadding()
-        searchTextfield.leftView = searchImageView
-        searchTextfield.backgroundColor = UIColor(named: "searchBar")
-        searchTextfield.borderStyle = .roundedRect
-        searchTextfield.layer.cornerRadius = 10
-        searchTextfield.attributedPlaceholder = NSAttributedString(string: "도시 또는 공항 검색", attributes: [.foregroundColor: UIColor.systemGray])
-        searchTextfield.font = UIFont(name: "SFProDisplay-Regular", size: 19)
-        searchTextfield.textColor = .white
-        NSLayoutConstraint.activate([searchTextfield.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 15),
-                                     searchTextfield.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     searchTextfield.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                                     searchTextfield.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-                                     searchTextfield.heightAnchor.constraint(equalToConstant: 40)])
+        contentView.addSubViews(searchBar)
+
+        searchBar.placeholder = "도시 또는 공항 검색"
+        searchBar.searchTextField.backgroundColor = UIColor(named: "searchBar")
+        searchBar.searchTextField.textColor = .white
+        searchBar.searchTextField.font = UIFont(name: "SFProDisplay-Regular", size: 19)
+        searchBar.barTintColor = .clear
+
+        NSLayoutConstraint.activate([searchBar.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 15),
+                                     searchBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                                     searchBar.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+                                     searchBar.heightAnchor.constraint(equalToConstant: 40)])
     }
     
     private func setWeatherInfoLayout() {
         contentView.addSubViews(weatherInfoView)
         weatherInfoView.addSubViews(leftStackView, rightStackView)
         weatherInfoView.image = UIImage(named: "weatherInfo")
-        NSLayoutConstraint.activate([weatherInfoView.topAnchor.constraint(equalTo: searchTextfield.bottomAnchor, constant: 20),
-                                     weatherInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     weatherInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        NSLayoutConstraint.activate([weatherInfoView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
+                                     weatherInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+                                     weatherInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
                                      weatherInfoView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/7)])
         NSLayoutConstraint.activate([leftStackView.topAnchor.constraint(equalTo: weatherInfoView.topAnchor, constant: 6),
                                      leftStackView.bottomAnchor.constraint(equalTo: weatherInfoView.bottomAnchor, constant: 10),

@@ -25,10 +25,21 @@ class WeatherViewController: UIViewController {
         horizontalStackView.distribution = .fillEqually
         horizontalStackView.spacing = 16
         horizontalStackView.backgroundColor = .clear
-        horizontalStackView.layer.cornerRadius = 10
         horizontalStackView.isLayoutMarginsRelativeArrangement = true
         return horizontalStackView
     }()
+    private var divider2 = UIView()
+    private var bottomStackView : UIStackView = {
+        let bottomStackView = UIStackView()
+        bottomStackView.axis = .horizontal
+        bottomStackView.distribution = .fillEqually
+        bottomStackView.backgroundColor = .clear
+        bottomStackView.isLayoutMarginsRelativeArrangement = true
+        return bottomStackView
+    }()
+    private var mapBtn = UIButton()
+    private var menuBtn = UIButton()
+    private var container = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +51,18 @@ class WeatherViewController: UIViewController {
     
     func setViewLayout(){
         self.view.addSubViews(scrollView)
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .black
         scrollView.addSubViews(contentView)
-        contentView.image = UIImage(named: "weatherBg")
+        contentView.backgroundColor = .blue
+        let image = UIImage(named: "weatherBg")
+        contentView.image = image
         
-        NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-                                     scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                                     scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                                     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        let safeArea = view.safeAreaLayoutGuide
+
+        NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+                                     scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+                                     scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+                                     scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)])
         NSLayoutConstraint.activate([contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
                                      contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
                                      contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
@@ -55,6 +70,7 @@ class WeatherViewController: UIViewController {
                                      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                                     ])
         let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+        contentViewHeight.priority = .defaultHigh
         contentViewHeight.isActive = true
     }
     func setTopLayout(){
@@ -70,9 +86,13 @@ class WeatherViewController: UIViewController {
             i.textAlignment = .center
         }
         NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
+                                     myLocation.heightAnchor.constraint(equalToConstant: 40),
                                      temperature.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: 6),
+                                     temperature.heightAnchor.constraint(equalToConstant: 110),
                                      weather.topAnchor.constraint(equalTo: temperature.bottomAnchor, constant: 6),
-                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 5)])
+                                     weather.heightAnchor.constraint(equalToConstant: 30),
+                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 5),
+                                     highNLow.heightAnchor.constraint(equalToConstant: 24)])
         setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: "의정부시")
         setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: "21º")
         setFont(label: weather, fontName: "SFProDisplay-Regular", size: 24, text: "흐림")
@@ -91,7 +111,7 @@ class WeatherViewController: UIViewController {
                                      infoCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                                      infoCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                                      infoCard.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-32),
-                                     infoCard.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)])
+                                     infoCard.heightAnchor.constraint(equalToConstant: 220)])
         
         infoCard.addSubViews(weatherInfo, divider1, weatherScrollView)
         
@@ -112,13 +132,12 @@ class WeatherViewController: UIViewController {
                                      divider1.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
                                      divider1.heightAnchor.constraint(equalToConstant: 0.5)])
         
+//        weatherScrollView.backgroundColor = .gray
         NSLayoutConstraint.activate([weatherScrollView.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 16),
-                                     weatherScrollView.leadingAnchor.constraint(equalTo: infoCard.leadingAnchor, constant: 12),
-                                     weatherScrollView.bottomAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: -16),
-                                     weatherScrollView.trailingAnchor.constraint(equalTo: infoCard.trailingAnchor, constant: -12)])
-        let width = weatherScrollView.widthAnchor.constraint(greaterThanOrEqualTo: view.widthAnchor, constant: -30)
-        width.priority = .defaultLow
-        width.isActive = true
+                                     weatherScrollView.leadingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+                                     weatherScrollView.bottomAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+                                     weatherScrollView.trailingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.trailingAnchor, constant: -12)])
+
         weatherScrollView.addSubViews(horizontalStackView)
 
         NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.topAnchor),
@@ -126,6 +145,9 @@ class WeatherViewController: UIViewController {
                                      horizontalStackView.trailingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.trailingAnchor),
                                      horizontalStackView.bottomAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.bottomAnchor),
                                      horizontalStackView.heightAnchor.constraint(equalTo: weatherScrollView.heightAnchor)])
+        let width = horizontalStackView.widthAnchor.constraint(greaterThanOrEqualTo: infoCard.widthAnchor)
+        width.priority = .defaultLow
+        width.isActive = true
         
         [setStackViewItem(time: "Now", icon: "moonNcloud", temperature: "21º"),
          setStackViewItem(time: "10시", icon: "rain", temperature: "21º"),
@@ -144,6 +166,17 @@ class WeatherViewController: UIViewController {
     }
     
     func setBottomLayout(){
+        contentView.addSubViews(divider2, bottomStackView)
+        divider2.backgroundColor = .white.withAlphaComponent(0.3)
+        NSLayoutConstraint.activate([divider2.topAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: 200),
+                                     divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                                     divider2.heightAnchor.constraint(equalToConstant: 0.4)])
+        NSLayoutConstraint.activate([bottomStackView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
+                                     bottomStackView.heightAnchor.constraint(equalToConstant: 82),
+                                     bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                                     bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+        
         
     }
     
