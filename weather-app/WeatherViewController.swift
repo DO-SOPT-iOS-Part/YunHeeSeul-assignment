@@ -8,6 +8,7 @@
 import UIKit
 
 class WeatherViewController: UIViewController {
+    private var backgroundView = UIImageView()
     private var scrollView = UIScrollView()
     private var contentView = UIImageView()
     private var myLocation = UILabel()
@@ -32,13 +33,31 @@ class WeatherViewController: UIViewController {
     private var bottomStackView : UIStackView = {
         let bottomStackView = UIStackView()
         bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .fillEqually
+        bottomStackView.distribution = .equalSpacing
         bottomStackView.backgroundColor = .clear
         bottomStackView.isLayoutMarginsRelativeArrangement = true
         return bottomStackView
     }()
-    private var mapBtn = UIButton()
-    private var menuBtn = UIButton()
+    private var mapBtn : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "map"), for: .normal)
+        return btn
+    }()
+    private var mainBtn : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "main"), for: .normal)
+        return btn
+    }()
+    private var dotBtn : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "dot"), for: .normal)
+        return btn
+    }()
+    private var arrowBtn : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "arrow"), for: .normal)
+        return btn
+    }()
     private var container = UIView()
     
     override func viewDidLoad() {
@@ -50,23 +69,26 @@ class WeatherViewController: UIViewController {
     }
     
     func setViewLayout(){
-        self.view.addSubViews(scrollView)
-        scrollView.backgroundColor = .black
+        self.view.addSubViews(backgroundView, scrollView)
+        backgroundView.image = UIImage(named: "weatherBg")
+//        backgroundView.addSubViews(scrollView)
+        scrollView.backgroundColor = .clear
         scrollView.addSubViews(contentView)
-        contentView.backgroundColor = .blue
-        let image = UIImage(named: "weatherBg")
-        contentView.image = image
+        contentView.backgroundColor = .clear
         
         let safeArea = view.safeAreaLayoutGuide
-
+        NSLayoutConstraint.activate([backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+                                     backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                     backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                     backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
                                      scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
                                      scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
                                      scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)])
-        NSLayoutConstraint.activate([contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+        NSLayoutConstraint.activate([contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
                                      contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
                                      contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-                                     contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+                                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
                                      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                                     ])
         let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
@@ -79,19 +101,19 @@ class WeatherViewController: UIViewController {
             i.textColor = .white
             i.backgroundColor = .clear
             i.adjustsFontSizeToFitWidth = true
-            
+            i.textAlignment = .center
             NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: contentView.widthAnchor),
                                          i.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                          i.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
-            i.textAlignment = .center
         }
+        
         NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
                                      myLocation.heightAnchor.constraint(equalToConstant: 40),
-                                     temperature.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: 6),
+                                     temperature.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: 4),
                                      temperature.heightAnchor.constraint(equalToConstant: 110),
-                                     weather.topAnchor.constraint(equalTo: temperature.bottomAnchor, constant: 6),
+                                     weather.topAnchor.constraint(equalTo: temperature.bottomAnchor, constant: 4),
                                      weather.heightAnchor.constraint(equalToConstant: 30),
-                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 5),
+                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 4),
                                      highNLow.heightAnchor.constraint(equalToConstant: 24)])
         setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: "의정부시")
         setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: "21º")
@@ -166,16 +188,28 @@ class WeatherViewController: UIViewController {
     }
     
     func setBottomLayout(){
-        contentView.addSubViews(divider2, bottomStackView)
+        backgroundView.addSubViews(divider2, bottomStackView)
         divider2.backgroundColor = .white.withAlphaComponent(0.3)
-        NSLayoutConstraint.activate([divider2.topAnchor.constraint(equalTo: infoCard.bottomAnchor, constant: 200),
+        NSLayoutConstraint.activate([divider2.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -82),
                                      divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                      divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                                      divider2.heightAnchor.constraint(equalToConstant: 0.4)])
-        NSLayoutConstraint.activate([bottomStackView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
-                                     bottomStackView.heightAnchor.constraint(equalToConstant: 82),
-                                     bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+        bottomStackView.backgroundColor = .clear
+        NSLayoutConstraint.activate([bottomStackView.heightAnchor.constraint(equalToConstant: 80), bottomStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+                                     bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+                                     bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)])
+        [mapBtn, container, mainBtn].forEach {
+            bottomStackView.addArrangedSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        container.addSubViews(arrowBtn, dotBtn)
+        container.backgroundColor = .red
+        NSLayoutConstraint.activate([arrowBtn.topAnchor.constraint(equalTo: container.topAnchor),
+                                     arrowBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+                                     arrowBtn.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+                                     dotBtn.topAnchor.constraint(equalTo: container.topAnchor),
+                                     dotBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+                                     dotBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor)])
         
         
     }
