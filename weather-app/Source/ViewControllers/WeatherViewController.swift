@@ -10,7 +10,7 @@ import UIKit
 class WeatherViewController: UIViewController {
     private var backgroundView = UIImageView()
     private var scrollView = UIScrollView()
-    private var contentView = UIImageView()
+    private var contentView = UIView()
     private var myLocation = UILabel()
     private var temperature = UILabel()
     private var weather = UILabel()
@@ -92,7 +92,7 @@ class WeatherViewController: UIViewController {
                                      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                                     ])
         let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultHigh
+        contentViewHeight.priority = .defaultLow
         contentViewHeight.isActive = true
     }
     func setTopLayout(){
@@ -124,6 +124,9 @@ class WeatherViewController: UIViewController {
     
     func setMiddleLayout(){
         contentView.addSubViews(infoCard)
+        infoCard.addSubViews(weatherInfo, divider1, weatherScrollView)
+        weatherScrollView.addSubViews(horizontalStackView)
+
         infoCard.backgroundColor = .white .withAlphaComponent(0.01)
         infoCard.layer.cornerRadius = 15
         infoCard.layer.borderWidth = 0.5
@@ -133,10 +136,8 @@ class WeatherViewController: UIViewController {
                                      infoCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                                      infoCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                                      infoCard.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-32),
-                                     infoCard.heightAnchor.constraint(equalToConstant: 220)])
-        
-        infoCard.addSubViews(weatherInfo, divider1, weatherScrollView)
-        
+                                     infoCard.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)])
+                
         weatherInfo.backgroundColor = .clear
         weatherInfo.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
         weatherInfo.font = UIFont(name: "SFProDisplay-Regular", size: 18)
@@ -154,20 +155,17 @@ class WeatherViewController: UIViewController {
                                      divider1.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
                                      divider1.heightAnchor.constraint(equalToConstant: 0.5)])
         
-//        weatherScrollView.backgroundColor = .gray
-        NSLayoutConstraint.activate([weatherScrollView.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 16),
+        NSLayoutConstraint.activate([weatherScrollView.topAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.topAnchor, constant: 90),
                                      weatherScrollView.leadingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.leadingAnchor, constant: 12),
                                      weatherScrollView.bottomAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.bottomAnchor, constant: -16),
                                      weatherScrollView.trailingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.trailingAnchor, constant: -12)])
-
-        weatherScrollView.addSubViews(horizontalStackView)
 
         NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.topAnchor),
                                      horizontalStackView.leadingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.leadingAnchor),
                                      horizontalStackView.trailingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.trailingAnchor),
                                      horizontalStackView.bottomAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.bottomAnchor),
                                      horizontalStackView.heightAnchor.constraint(equalTo: weatherScrollView.heightAnchor)])
-        let width = horizontalStackView.widthAnchor.constraint(greaterThanOrEqualTo: infoCard.widthAnchor)
+        let width = horizontalStackView.widthAnchor.constraint(greaterThanOrEqualTo: weatherScrollView.widthAnchor)
         width.priority = .defaultLow
         width.isActive = true
         

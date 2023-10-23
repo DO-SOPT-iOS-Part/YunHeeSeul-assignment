@@ -44,10 +44,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(weatherInfoCardTap(_:)))
         setViewLayout()
         setComponentLayout()
         setSearchBarLayout()
-        setWeatherInfoLayout()
+        setWeatherInfoLayout(tapGesture)
     }
     
      func setViewLayout(){
@@ -108,10 +109,13 @@ class ViewController: UIViewController {
                                      searchBar.heightAnchor.constraint(equalToConstant: 40)])
     }
     
-    private func setWeatherInfoLayout() {
+    private func setWeatherInfoLayout(_ tapGesture: UITapGestureRecognizer) {
         contentView.addSubViews(weatherInfoView)
         weatherInfoView.addSubViews(leftStackView, rightStackView)
         weatherInfoView.image = UIImage(named: "weatherInfo")
+        //addGestureRecognizer 을 통해 만든 gesture를 등록
+        weatherInfoView.addGestureRecognizer(tapGesture)
+        weatherInfoView.isUserInteractionEnabled = true
         NSLayoutConstraint.activate([weatherInfoView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
                                      weatherInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                                      weatherInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
@@ -150,7 +154,6 @@ class ViewController: UIViewController {
             rightStackView.addArrangedSubview(i)
             i.backgroundColor = .clear
             i.textColor = .white
-
             NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: rightStackView.widthAnchor),i.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: 14)])
         }
         
@@ -167,23 +170,11 @@ class ViewController: UIViewController {
                                      highNLow.topAnchor.constraint(equalTo: temperatures.bottomAnchor, constant: 10)])
 
     }
-}
-
-extension UIView {
-    public func addSubViews(_ views: UIView...) {
-        views.forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview($0)
-        }
+    
+    @objc
+    func weatherInfoCardTap(_ gesture: UITapGestureRecognizer){
+        print("tap")
     }
-}
-
-extension UITextField {
-  func addLeftPadding() {
-    let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
-    self.leftView = paddingView
-    self.leftViewMode = ViewMode.always
-  }
 }
 
 
