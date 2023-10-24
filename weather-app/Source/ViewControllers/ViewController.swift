@@ -174,6 +174,8 @@ class ViewController: UIViewController {
     @objc
     func weatherInfoCardTap(_ gesture: UITapGestureRecognizer){
         print("tap")
+        let weatherVC = WeatherViewController()
+        self.navigationController?.pushViewController(weatherVC, animated: true)
     }
 }
 
