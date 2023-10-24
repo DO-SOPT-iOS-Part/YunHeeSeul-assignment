@@ -19,7 +19,6 @@ class WeatherViewController: UIViewController {
     private var weatherInfo = UITextView()
     private var divider1 = UIView()
     private var weatherScrollView = UIScrollView()
-    private var contentView2 = UIView()
     private var horizontalStackView : UIStackView = {
         let horizontalStackView = UIStackView()
         horizontalStackView.axis = .horizontal
@@ -62,6 +61,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
         setViewLayout()
         setTopLayout()
         setMiddleLayout()
@@ -71,7 +71,6 @@ class WeatherViewController: UIViewController {
     func setViewLayout(){
         self.view.addSubViews(backgroundView, scrollView)
         backgroundView.image = UIImage(named: "weatherBg")
-//        backgroundView.addSubViews(scrollView)
         scrollView.backgroundColor = .clear
         scrollView.addSubViews(contentView)
         contentView.backgroundColor = .clear
@@ -186,22 +185,24 @@ class WeatherViewController: UIViewController {
     }
     
     func setBottomLayout(){
-        backgroundView.addSubViews(divider2, bottomStackView)
+        contentView.addSubViews(divider2, bottomStackView)
         divider2.backgroundColor = .white.withAlphaComponent(0.3)
         NSLayoutConstraint.activate([divider2.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -82),
                                      divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                      divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                                      divider2.heightAnchor.constraint(equalToConstant: 0.4)])
         bottomStackView.backgroundColor = .clear
-        NSLayoutConstraint.activate([bottomStackView.heightAnchor.constraint(equalToConstant: 80), bottomStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+        NSLayoutConstraint.activate([bottomStackView.heightAnchor.constraint(equalToConstant: 50),
+                                     bottomStackView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
                                      bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                                      bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)])
         [mapBtn, container, mainBtn].forEach {
             bottomStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+    
+        
         container.addSubViews(arrowBtn, dotBtn)
-        container.backgroundColor = .red
         NSLayoutConstraint.activate([arrowBtn.topAnchor.constraint(equalTo: container.topAnchor),
                                      arrowBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
                                      arrowBtn.leadingAnchor.constraint(equalTo: container.leadingAnchor),
@@ -209,7 +210,8 @@ class WeatherViewController: UIViewController {
                                      dotBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
                                      dotBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor)])
         
-        
+        mainBtn.addTarget(self, action: #selector(mainButtonTap(_:)), for: .touchUpInside)
+
     }
     
     func setFont(label: UILabel, fontName: String, size: CGFloat, text: String){
@@ -245,6 +247,13 @@ class WeatherViewController: UIViewController {
             view.addArrangedSubview($0)
         }
         return view
+    }
+    
+    @objc
+    func mainButtonTap(_ gesture: UITapGestureRecognizer){
+        print("pop")
+        let mainVC = ViewController()
+        self.navigationController?.popViewController(animated: true)
     }
 
 }
