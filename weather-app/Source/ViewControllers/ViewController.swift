@@ -15,24 +15,8 @@ class ViewController: UIViewController {
     private var titleText = UILabel()
     private var searchBar = UISearchBar()
     private var searchImageView = UIImageView()
-    private var leftStackView: UIStackView = {
-        let leftStackView = UIStackView()
-        leftStackView.axis = .vertical
-        leftStackView.distribution = .fillEqually
-        leftStackView.backgroundColor = .clear
-        leftStackView.layer.cornerRadius = 10
-        leftStackView.isLayoutMarginsRelativeArrangement = true
-        return leftStackView
-    }()
-    private var rightStackView: UIStackView = {
-        let rightStackView = UIStackView()
-        rightStackView.axis = .vertical
-        rightStackView.distribution = .fillEqually
-        rightStackView.backgroundColor = .clear
-        rightStackView.layer.cornerRadius = 10
-        rightStackView.isLayoutMarginsRelativeArrangement = true
-        return rightStackView
-    }()
+    private var leftStackView = UIStackView()
+    private var rightStackView = UIStackView()
     private var blankView1 = UILabel()
     private var blankView2 = UILabel()
     private var weatherInfoView = UIImageView()
@@ -41,26 +25,21 @@ class ViewController: UIViewController {
     private var weather = UILabel()
     private var temperatures = UILabel()
     private var highNLow = UILabel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(weatherInfoCardTap(_:)))
+        self.navigationController?.navigationBar.isHidden = true
         setViewLayout()
-        setComponentLayout()
-        setSearchBarLayout()
-        setWeatherInfoLayout(tapGesture)
+        setDetail()
     }
     
-     func setViewLayout(){
-        self.view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        scrollView.backgroundColor = .black
-        contentView.backgroundColor = .black
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+    func setViewLayout(){
+        self.view.addSubViews(scrollView)
+        scrollView.addSubViews(contentView)
+        contentView.addSubViews(menuBtn, titleText, searchBar, weatherInfoView)
+        weatherInfoView.addSubViews(leftStackView, rightStackView)
         
         let safeArea = view.safeAreaLayoutGuide
-        
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
                                      scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
                                      scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
@@ -73,59 +52,33 @@ class ViewController: UIViewController {
         let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
         contentViewHeight.priority = .defaultLow
         contentViewHeight.isActive = true
-    }
-    
-    private func setComponentLayout(){
-        contentView.addSubViews(menuBtn, titleText)
         
-        menuBtn.setBackgroundImage(UIImage(named: "menu"), for: .normal)
         NSLayoutConstraint.activate([menuBtn.topAnchor.constraint(equalTo: contentView.topAnchor),
                                      menuBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                                      menuBtn.widthAnchor.constraint(equalToConstant: 42),
                                      menuBtn.heightAnchor.constraint(equalToConstant: 42)])
-        
-        titleText.text = "날씨"
-        titleText.font = UIFont(name: "SFProDisplay-Bold", size: 36)
-        titleText.backgroundColor = .black
-        titleText.textColor = .white
         NSLayoutConstraint.activate([titleText.topAnchor.constraint(equalTo: menuBtn.bottomAnchor, constant: 10), titleText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                                      titleText.widthAnchor.constraint(equalTo: contentView.widthAnchor),
                                      titleText.heightAnchor.constraint(equalToConstant: 44)])
-    }
-    
-    private func setSearchBarLayout(){
-        contentView.addSubViews(searchBar)
-
-        searchBar.placeholder = "도시 또는 공항 검색"
-        searchBar.searchTextField.backgroundColor = UIColor(named: "searchBar")
-        searchBar.searchTextField.textColor = .white
-        searchBar.searchTextField.font = UIFont(name: "SFProDisplay-Regular", size: 19)
-        searchBar.barTintColor = .clear
-
+        
+        //[서치바]
         NSLayoutConstraint.activate([searchBar.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 15),
                                      searchBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                      searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                                      searchBar.widthAnchor.constraint(equalTo: contentView.widthAnchor),
                                      searchBar.heightAnchor.constraint(equalToConstant: 40)])
-    }
-    
-    private func setWeatherInfoLayout(_ tapGesture: UITapGestureRecognizer) {
-        contentView.addSubViews(weatherInfoView)
-        weatherInfoView.addSubViews(leftStackView, rightStackView)
-        weatherInfoView.image = UIImage(named: "weatherInfo")
-        //addGestureRecognizer 을 통해 만든 gesture를 등록
-        weatherInfoView.addGestureRecognizer(tapGesture)
-        weatherInfoView.isUserInteractionEnabled = true
+        
+        //[날씨 정보 카드]
         NSLayoutConstraint.activate([weatherInfoView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
                                      weatherInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
                                      weatherInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
                                      weatherInfoView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/7)])
+        //나의 위치,날씨 라벨을 담은 좌측 스택뷰
         NSLayoutConstraint.activate([leftStackView.topAnchor.constraint(equalTo: weatherInfoView.topAnchor, constant: 6),
                                      leftStackView.bottomAnchor.constraint(equalTo: weatherInfoView.bottomAnchor, constant: 10),
                                      leftStackView.leadingAnchor.constraint(equalTo: weatherInfoView.leadingAnchor),
                                      leftStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2),
                                      leftStackView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/2)])
-        
         for i in [myLocation, city, weather] {
             leftStackView.addArrangedSubview(i)
             i.backgroundColor = .clear
@@ -133,19 +86,10 @@ class ViewController: UIViewController {
             i.adjustsFontSizeToFitWidth = true
             NSLayoutConstraint.activate([i.leadingAnchor.constraint(equalTo: leftStackView.leadingAnchor, constant: 14)])
         }
-        
-        myLocation.text = "나의 위치"
-        myLocation.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: leftStackView.topAnchor, constant: 0)])
-        
-        city.text = "의정부시"
-        city.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-        NSLayoutConstraint.activate([city.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: -20)])
-        
-        weather.text = "흐림"
-        weather.font = UIFont(name: "SFProDisplay-Medium", size: 16)
-        NSLayoutConstraint.activate([weather.bottomAnchor.constraint(equalTo: leftStackView.bottomAnchor, constant: -10)])
-        
+        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: leftStackView.topAnchor, constant: 0),
+                                     city.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: -20),
+                                     weather.bottomAnchor.constraint(equalTo: leftStackView.bottomAnchor, constant: -10)])
+        //기온, 최고/최저 기온 라벨을 담은 우측 스택뷰
         NSLayoutConstraint.activate([rightStackView.topAnchor.constraint(equalTo: weatherInfoView.topAnchor, constant: 6),
                                      rightStackView.trailingAnchor.constraint(equalTo: weatherInfoView.trailingAnchor, constant: -16),
                                      rightStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2),
@@ -154,26 +98,67 @@ class ViewController: UIViewController {
             rightStackView.addArrangedSubview(i)
             i.backgroundColor = .clear
             i.textColor = .white
-            NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: rightStackView.widthAnchor),i.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: 14)])
+            NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: rightStackView.widthAnchor),
+                                         i.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: 14)])
         }
+        NSLayoutConstraint.activate([temperatures.topAnchor.constraint(equalTo: rightStackView.topAnchor, constant: 10),
+                                     temperatures.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: -20),
+                                     highNLow.bottomAnchor.constraint(equalTo: rightStackView.bottomAnchor),
+                                     highNLow.topAnchor.constraint(equalTo: temperatures.bottomAnchor, constant: 10)])
+    }
+    func setDetail(){
+        self.view.backgroundColor = .black
+        scrollView.backgroundColor = .black
+        contentView.backgroundColor = .black
         
+        menuBtn.setBackgroundImage(UIImage(named: "menu"), for: .normal)
+        titleText.text = "날씨"
+        titleText.font = UIFont(name: "SFProDisplay-Bold", size: 36)
+        titleText.backgroundColor = .black
+        titleText.textColor = .white
+        
+        //[서치바]
+        searchBar.placeholder = "도시 또는 공항 검색"
+        searchBar.searchTextField.backgroundColor = UIColor(named: "searchBar")
+        searchBar.searchTextField.textColor = .white
+        searchBar.searchTextField.font = UIFont(name: "SFProDisplay-Regular", size: 19)
+        searchBar.barTintColor = .clear
+        
+        //[날씨 정보 카드]
+        weatherInfoView.image = UIImage(named: "weatherInfo")
+        //addGestureRecognizer 을 통해 만든 gesture를 등록
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(weatherInfoCardTap(_:)))
+        weatherInfoView.addGestureRecognizer(tapGesture)
+        weatherInfoView.isUserInteractionEnabled = true
+        //나의 위치,날씨 라벨을 담은 좌측 스택뷰
+        leftStackView.axis = .vertical
+        leftStackView.distribution = .fillEqually
+        leftStackView.backgroundColor = .clear
+        leftStackView.layer.cornerRadius = 10
+        leftStackView.isLayoutMarginsRelativeArrangement = true
+        myLocation.text = "나의 위치"
+        myLocation.font = UIFont(name: "SFProDisplay-Bold", size: 24)
+        city.text = "의정부시"
+        city.font = UIFont(name: "SFProDisplay-Medium", size: 17)
+        weather.text = "흐림"
+        weather.font = UIFont(name: "SFProDisplay-Medium", size: 16)
+        //기온, 최고/최저 기온 라벨을 담은 우측 스택뷰
+        rightStackView.axis = .vertical
+        rightStackView.distribution = .fillEqually
+        rightStackView.backgroundColor = .clear
+        rightStackView.layer.cornerRadius = 10
+        rightStackView.isLayoutMarginsRelativeArrangement = true
         temperatures.text = "21º"
         temperatures.textAlignment = .right
         temperatures.font = UIFont(name: "SFProDisplay-Light", size: 52)
-        NSLayoutConstraint.activate([temperatures.topAnchor.constraint(equalTo: rightStackView.topAnchor, constant: 10),
-                                     temperatures.trailingAnchor.constraint(equalTo: rightStackView.trailingAnchor, constant: -20)])
-        
         highNLow.textAlignment = .right
         highNLow.text = "최고:29º 최저:15º"
         highNLow.font = UIFont(name: "SFProDisplay-Medium", size: 15)
-        NSLayoutConstraint.activate([highNLow.bottomAnchor.constraint(equalTo: rightStackView.bottomAnchor),
-                                     highNLow.topAnchor.constraint(equalTo: temperatures.bottomAnchor, constant: 10)])
-
     }
     
+    //날씨화면 push
     @objc
     func weatherInfoCardTap(_ gesture: UITapGestureRecognizer){
-        print("tap")
         let weatherVC = WeatherViewController()
         self.navigationController?.pushViewController(weatherVC, animated: true)
     }
