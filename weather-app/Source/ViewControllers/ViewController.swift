@@ -121,6 +121,8 @@ class ViewController: UIViewController {
         searchBar.placeholder = "도시 또는 공항 검색"
         searchBar.searchTextField.backgroundColor = UIColor(named: "searchBar")
         searchBar.searchTextField.textColor = .white
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: searchBar.searchTextField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        searchBar.searchTextField.leftView?.tintColor = UIColor.lightGray
         searchBar.searchTextField.font = UIFont(name: "SFProDisplay-Regular", size: 19)
         searchBar.barTintColor = .clear
         
