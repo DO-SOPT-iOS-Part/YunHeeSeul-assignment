@@ -30,6 +30,8 @@ class WeatherViewController: UIViewController {
     private var arrowBtn = UIButton()
     private var container = UIView()
     
+    private var mainTableView = UITableView(frame: .zero, style: .plain)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
