@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class WeatherViewController: UIViewController {
     private var backgroundView = UIImageView()
@@ -64,86 +66,96 @@ class WeatherViewController: UIViewController {
 
         let safeArea = view.safeAreaLayoutGuide
         //배경이미지뷰
-        NSLayoutConstraint.activate([backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-                                     backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                                     backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                                     backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        backgroundView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.equalTo(view)
+        }
+
         //스크롤뷰
-        NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-                                     scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-                                     scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-                                     scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)])
+        scrollView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.equalTo(safeArea)
+        }
+
         //컨텐트뷰
-        NSLayoutConstraint.activate([contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                                     contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-                                     contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-                                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-                                    ])
-        //컨텐트뷰 height 지정함으로써 수직 스크롤로 지정
-        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
+        contentView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.width.equalTo(scrollView)
+            $0.height.greaterThanOrEqualTo(view).priority(.low)
+        }
         
         //[화면 상단] 위치, 기온, 날씨, 최고/최저 기온
-        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-                                     myLocation.heightAnchor.constraint(equalToConstant: 40),
-                                     temperature.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: 4),
-                                     temperature.heightAnchor.constraint(equalToConstant: 110),
-                                     weather.topAnchor.constraint(equalTo: temperature.bottomAnchor, constant: 4),
-                                     weather.heightAnchor.constraint(equalToConstant: 30),
-                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 4),
-                                     highNLow.heightAnchor.constraint(equalToConstant: 24)])
+        myLocation.snp.makeConstraints{
+            $0.top.equalTo(contentView).inset(50)
+            $0.height.equalTo(40)
+        }
+        temperature.snp.makeConstraints{
+            $0.top.equalTo(myLocation.snp.bottom).inset(4)
+            $0.height.equalTo(110)
+        }
+        weather.snp.makeConstraints{
+            $0.top.equalTo(temperature.snp.bottom).inset(4)
+            $0.height.equalTo(24)
+        }
+        highNLow.snp.makeConstraints{
+            $0.top.equalTo(weather.snp.bottom).offset(4)
+            $0.height.equalTo(24)
+        }
         
         //[화면 중앙] 시간 별 날씨 정보 카드
-        NSLayoutConstraint.activate([infoCard.topAnchor.constraint(equalTo: highNLow.bottomAnchor, constant: 60),
-                                     infoCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                                     infoCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-                                     infoCard.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-32),
-                                     infoCard.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)])
+        infoCard.snp.makeConstraints{
+            $0.top.equalTo(highNLow.snp.bottom).offset(60)
+            $0.leading.trailing.equalTo(contentView).inset(16)
+            $0.width.equalTo(UIScreen.main.bounds.width-32)
+            $0.height.equalTo(UIScreen.main.bounds.height/4)
+        }
         //날씨 정보 카드 내 날씨 설명 라벨
-        NSLayoutConstraint.activate([weatherInfo.topAnchor.constraint(equalTo: infoCard.topAnchor, constant: 6),
-                                     weatherInfo.leadingAnchor.constraint(equalTo: infoCard.leadingAnchor, constant: 12),
-                                     weatherInfo.trailingAnchor.constraint(equalTo: infoCard.trailingAnchor, constant: -12),
-                                     weatherInfo.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
-                                     weatherInfo.heightAnchor.constraint(equalToConstant: 60)])
+        weatherInfo.snp.makeConstraints{
+            $0.top.equalTo(infoCard).inset(6)
+            $0.leading.trailing.equalTo(infoCard).inset(12)
+            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.height.equalTo(60)
+        }
+
         //날씨 정보 카드 내 구분선
-        NSLayoutConstraint.activate([divider1.topAnchor.constraint(equalTo: weatherInfo.bottomAnchor, constant: 6),
-                                     divider1.leadingAnchor.constraint(equalTo: infoCard.leadingAnchor, constant: 12),
-                                     divider1.trailingAnchor.constraint(equalTo: infoCard.trailingAnchor, constant: -12),
-                                     divider1.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
-                                     divider1.heightAnchor.constraint(equalToConstant: 0.5)])
+        divider1.snp.makeConstraints{
+            $0.top.equalTo(weatherInfo.snp.bottom).offset(6)
+            $0.leading.trailing.equalTo(infoCard).inset(12)
+            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.height.equalTo(0.5)
+        }
+
         //시간 별 날씨 정보를 스크롤 할 수 있는 수평스크롤뷰
-        NSLayoutConstraint.activate([weatherScrollView.topAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.topAnchor, constant: 90),
-                                     weatherScrollView.leadingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.leadingAnchor, constant: 12),
-                                     weatherScrollView.bottomAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-                                     weatherScrollView.trailingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.trailingAnchor, constant: -12)])
+        weatherScrollView.snp.makeConstraints{
+            $0.top.equalTo(infoCard.safeAreaLayoutGuide.snp.top).inset(90)
+            $0.leading.trailing.equalTo(infoCard).inset(12)
+            $0.bottom.equalTo(infoCard.safeAreaLayoutGuide.snp.bottom).inset(16)
+            $0.height.equalTo(0.5)
+        }
+
         //시간 별 날씨 정보를 담은 스택뷰
-        NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.topAnchor),
-                                     horizontalStackView.leadingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.leadingAnchor),
-                                     horizontalStackView.trailingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.trailingAnchor),
-                                     horizontalStackView.bottomAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.bottomAnchor),
-                                     horizontalStackView.heightAnchor.constraint(equalTo: weatherScrollView.heightAnchor)])
-        let width = horizontalStackView.widthAnchor.constraint(greaterThanOrEqualTo: weatherScrollView.widthAnchor)
-        width.priority = .defaultLow
-        width.isActive = true
+        horizontalStackView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.equalTo(weatherScrollView.contentLayoutGuide)
+            $0.height.equalTo(weatherScrollView)
+            $0.width.greaterThanOrEqualTo(weatherScrollView).priority(.low)
+        }
         
         //[화면 하단] 구분선
-        NSLayoutConstraint.activate([divider2.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -82),
-                                     divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                                     divider2.heightAnchor.constraint(equalToConstant: 0.4)])
+        divider2.snp.makeConstraints{
+            $0.bottom.equalTo(backgroundView).inset(82)
+            $0.leading.trailing.equalTo(contentView)
+            $0.height.equalTo(0.4)
+        }
+
         //[화면 하단] 버튼들을 담은 스택뷰
-        NSLayoutConstraint.activate([bottomStackView.heightAnchor.constraint(equalToConstant: 50),
-                                     bottomStackView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
-                                     bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                                     bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)])
-        NSLayoutConstraint.activate([arrowBtn.topAnchor.constraint(equalTo: container.topAnchor),
-                                     arrowBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-                                     arrowBtn.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-                                     dotBtn.topAnchor.constraint(equalTo: container.topAnchor),
-                                     dotBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-                                     dotBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor)])
+        bottomStackView.snp.makeConstraints{
+            $0.top.equalTo(divider2.snp.bottom)
+            $0.leading.trailing.equalTo(contentView).inset(10)
+            $0.height.equalTo(50)
+        }
+        arrowBtn.snp.makeConstraints{
+            $0.top.bottom.leading.equalTo(container)
+        }
+        dotBtn.snp.makeConstraints{
+            $0.top.bottom.trailing.equalTo(container)
+        }
     }
     
     func setDetail(){
@@ -158,9 +170,9 @@ class WeatherViewController: UIViewController {
             i.backgroundColor = .clear
             i.adjustsFontSizeToFitWidth = true
             i.textAlignment = .center
-            NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-                                         i.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                         i.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+            i.snp.makeConstraints{
+                $0.width.leading.trailing.equalTo(contentView)
+            }
         }
         setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: "의정부시")
         setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: "21º")
@@ -169,34 +181,47 @@ class WeatherViewController: UIViewController {
         
         //[화면 중앙]
         //시간 별 날씨 정보 카드
-        infoCard.backgroundColor = .white .withAlphaComponent(0.01)
-        infoCard.layer.cornerRadius = 15
-        infoCard.layer.borderWidth = 0.5
-        infoCard.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        infoCard.do{
+            $0.backgroundColor = .white .withAlphaComponent(0.01)
+            $0.layer.cornerRadius = 15
+            $0.layer.borderWidth = 0.5
+            $0.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        }
         //날씨 설명 라벨
-        weatherInfo.backgroundColor = .clear
-        weatherInfo.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
-        weatherInfo.font = UIFont(name: "SFProDisplay-Regular", size: 18)
-        weatherInfo.textColor = .white
-        weatherInfo.textAlignment = .left
+        weatherInfo.do{
+            $0.backgroundColor = .clear
+            $0.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
+            $0.font = UIFont(name: "SFProDisplay-Regular", size: 18)
+            $0.textColor = .white
+            $0.textAlignment = .left
+        }
         //날씨 정보 카드 내 구분선
-        divider1.backgroundColor = .white.withAlphaComponent(0.3)
+        divider1.do{
+            $0.backgroundColor = .white.withAlphaComponent(0.3)
+        }
         //시간 별 날씨 정보를 담은 수평 스택뷰
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.distribution = .fillEqually
-        horizontalStackView.spacing = 16
-        horizontalStackView.backgroundColor = .clear
-        horizontalStackView.isLayoutMarginsRelativeArrangement = true
-        
+        horizontalStackView.do{
+            $0.axis = .horizontal
+            $0.distribution = .fillEqually
+            $0.spacing = 16
+            $0.backgroundColor = .clear
+            $0.isLayoutMarginsRelativeArrangement = true
+            
+        }
+
         //[화면 하단]
         //구분선
-        divider2.backgroundColor = .white.withAlphaComponent(0.3)
+        divider2.do{
+            $0.backgroundColor = .white.withAlphaComponent(0.3)
+        }
         //버튼들을 담은 스택뷰
-        bottomStackView.backgroundColor = .clear
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .equalSpacing
-        bottomStackView.backgroundColor = .clear
-        bottomStackView.isLayoutMarginsRelativeArrangement = true
+        bottomStackView.do{
+            $0.backgroundColor = .clear
+            $0.axis = .horizontal
+            $0.distribution = .equalSpacing
+            $0.backgroundColor = .clear
+            $0.isLayoutMarginsRelativeArrangement = true
+        }
         //지도, 점, 화살표, 메인 버튼
         mapBtn.setImage(UIImage(named: "map"), for: .normal)
         arrowBtn.setImage(UIImage(named: "arrow"), for: .normal)
@@ -215,26 +240,30 @@ class WeatherViewController: UIViewController {
     
     //스택뷰 아이템 생성
     func setStackViewItem(time: String, icon: String, temperature: String) -> UIStackView {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fillEqually
-        view.spacing = 10
+        let view = UIStackView().then{
+            $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.spacing = 10
+        }
+
+        let imageView = UIImageView().then{
+            let image = UIImage(named: icon)
+            $0.image = image
+        }
         
-        let imageView = UIImageView()
-        let image = UIImage(named: icon)
-        imageView.image = image
+        let timeLabel = UILabel().then{
+            $0.text = time
+            $0.font = UIFont(name: "SFProDisplay-Medium", size: 17)
+            $0.textColor = .white
+            $0.textAlignment = .center
+        }
         
-        let timeLabel = UILabel()
-        timeLabel.text = time
-        timeLabel.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-        timeLabel.textColor = .white
-        timeLabel.textAlignment = .center
-        
-        let tempLabel = UILabel()
-        tempLabel.text = temperature
-        tempLabel.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-        tempLabel.textColor = .white
-        tempLabel.textAlignment = .center
+        let tempLabel = UILabel().then{
+            $0.text = temperature
+            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
+            $0.textColor = .white
+            $0.textAlignment = .center
+        }
         
         [timeLabel, imageView, tempLabel].forEach {
             NSLayoutConstraint.activate([$0.widthAnchor.constraint(equalToConstant: 44)])
@@ -248,7 +277,6 @@ class WeatherViewController: UIViewController {
     @objc
     func mainButtonTap(_ gesture: UITapGestureRecognizer){
         print("pop")
-        let mainVC = ViewController()
         self.navigationController?.popViewController(animated: true)
     }
 
