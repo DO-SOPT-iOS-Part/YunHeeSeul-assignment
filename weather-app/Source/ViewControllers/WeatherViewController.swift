@@ -1,13 +1,5 @@
-//
-//  WeatherViewController.swift
-//  weather-app
-//
-//  Created by 윤희슬 on 2023/10/18.
-//
-
 import UIKit
 import SnapKit
-import Then
 
 class WeatherViewController: UIViewController {
     private var backgroundView = UIImageView()
@@ -21,7 +13,6 @@ class WeatherViewController: UIViewController {
     private var weatherInfo = UITextView()
     private var divider1 = UIView()
     private var weatherScrollView = UIScrollView()
-    private var horizontalStackView  = UIStackView()
     private var divider2 = UIView()
     private var bottomStackView = UIStackView()
     private var mapBtn = UIButton()
@@ -30,7 +21,7 @@ class WeatherViewController: UIViewController {
     private var arrowBtn = UIButton()
     private var container = UIView()
     
-    private var mainTableView = UITableView(frame: .zero, style: .plain)
+    private var weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,28 +29,15 @@ class WeatherViewController: UIViewController {
         self.navigationItem.titleView?.backgroundColor = .clear
         setViewLayout()
         setDetail()
+        setCollectionViewLayout()
     }
     
     func setViewLayout(){
         self.view.addSubViews(backgroundView, scrollView)
         scrollView.addSubViews(contentView)
         contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, divider2, bottomStackView)
-        infoCard.addSubViews(weatherInfo, divider1, weatherScrollView)
-        weatherScrollView.addSubViews(horizontalStackView)
-        //시간 별 날씨 정보를 담은 스택뷰의 아이템 생성
-        [setStackViewItem(time: "Now", icon: "moonNcloud", temperature: "21º"),
-         setStackViewItem(time: "10시", icon: "rain", temperature: "21º"),
-         setStackViewItem(time: "11시", icon: "heavyRain", temperature: "19º"),
-         setStackViewItem(time: "12시", icon: "thunder", temperature: "19º"),
-         setStackViewItem(time: "13시", icon: "rainNsun", temperature: "19º"),
-         setStackViewItem(time: "14시", icon: "moonNcloud", temperature: "18º"),
-         setStackViewItem(time: "15시", icon: "rain", temperature: "18º"),
-         setStackViewItem(time: "16시", icon: "heavyRain", temperature: "18º"),
-         setStackViewItem(time: "17시", icon: "thunder", temperature: "18º"),
-         setStackViewItem(time: "18시", icon: "rainNsun", temperature: "18º")].forEach{
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            horizontalStackView.addArrangedSubview($0)
-        }
+        infoCard.addSubViews(weatherInfo, divider1, weatherCollectionView)
+
         [mapBtn, container, mainBtn].forEach {
             bottomStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -123,21 +101,13 @@ class WeatherViewController: UIViewController {
             $0.width.equalTo(infoCard.bounds.width-24)
             $0.height.equalTo(0.5)
         }
-
-        //시간 별 날씨 정보를 스크롤 할 수 있는 수평스크롤뷰
-        weatherScrollView.snp.makeConstraints{
-            $0.top.equalTo(infoCard.safeAreaLayoutGuide.snp.top).inset(90)
-            $0.leading.trailing.equalTo(infoCard).inset(12)
-            $0.bottom.equalTo(infoCard.safeAreaLayoutGuide.snp.bottom).inset(16)
-            $0.height.equalTo(0.5)
+        //시간 별 날씨 collectionview
+        weatherCollectionView.snp.makeConstraints{
+            $0.top.equalTo(divider1.snp.bottom)
+            $0.bottom.equalTo(infoCard)
+            $0.leading.trailing.bottom.equalTo(infoCard).inset(10)
         }
-
-        //시간 별 날씨 정보를 담은 스택뷰
-        horizontalStackView.snp.makeConstraints{
-            $0.top.bottom.leading.trailing.equalTo(weatherScrollView.contentLayoutGuide)
-            $0.height.equalTo(weatherScrollView)
-            $0.width.greaterThanOrEqualTo(weatherScrollView).priority(.low)
-        }
+        
         
         //[화면 하단] 구분선
         divider2.snp.makeConstraints{
@@ -201,14 +171,13 @@ class WeatherViewController: UIViewController {
         divider1.do{
             $0.backgroundColor = .white.withAlphaComponent(0.3)
         }
-        //시간 별 날씨 정보를 담은 수평 스택뷰
-        horizontalStackView.do{
-            $0.axis = .horizontal
-            $0.distribution = .fillEqually
-            $0.spacing = 16
+        //시간 별 날씨 collectionview
+        weatherCollectionView.do{
+            $0.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: WeatherCollectionViewCell.identifier)
             $0.backgroundColor = .clear
-            $0.isLayoutMarginsRelativeArrangement = true
-            
+            $0.showsHorizontalScrollIndicator = false
+            $0.dataSource = self
+            $0.delegate = self
         }
 
         //[화면 하단]
@@ -233,46 +202,19 @@ class WeatherViewController: UIViewController {
         mainBtn.setImage(UIImage(named: "main"), for: .normal)
 
     }
+    private func setCollectionViewLayout() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.itemSize = CGSize(width: 44 , height: 90)
+        flowLayout.minimumLineSpacing = 12
+        self.weatherCollectionView.setCollectionViewLayout(flowLayout, animated: false)
+    }
+    
     
     //폰트 세팅
     func setFont(label: UILabel, fontName: String, size: CGFloat, text: String){
         label.font = UIFont(name: fontName, size: size)
         label.text = text
-    }
-    
-    //스택뷰 아이템 생성
-    func setStackViewItem(time: String, icon: String, temperature: String) -> UIStackView {
-        let view = UIStackView().then{
-            $0.axis = .vertical
-            $0.distribution = .fillEqually
-            $0.spacing = 10
-        }
-
-        let imageView = UIImageView().then{
-            let image = UIImage(named: icon)
-            $0.image = image
-        }
-        
-        let timeLabel = UILabel().then{
-            $0.text = time
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-            $0.textColor = .white
-            $0.textAlignment = .center
-        }
-        
-        let tempLabel = UILabel().then{
-            $0.text = temperature
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-            $0.textColor = .white
-            $0.textAlignment = .center
-        }
-        
-        [timeLabel, imageView, tempLabel].forEach {
-            NSLayoutConstraint.activate([$0.widthAnchor.constraint(equalToConstant: 44)])
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addArrangedSubview($0)
-        }
-        return view
     }
     
     //메인화면 pop
@@ -282,4 +224,16 @@ class WeatherViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
+}
+extension WeatherViewController: UICollectionViewDelegate{}
+extension WeatherViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return HourlyWeatherData.hourlyWeatherData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
+        cell.bindData(data: HourlyWeatherData.hourlyWeatherData[indexPath.row])
+        return cell
+    }
 }
