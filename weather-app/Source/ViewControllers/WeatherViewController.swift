@@ -12,7 +12,6 @@ class WeatherViewController: UIViewController {
     private var infoCard = UIView()
     private var weatherInfo = UITextView()
     private var divider1 = UIView()
-    private var weatherScrollView = UIScrollView()
     private var divider2 = UIView()
     private var bottomStackView = UIStackView()
     private var mapBtn = UIButton()
@@ -205,7 +204,7 @@ class WeatherViewController: UIViewController {
     private func setCollectionViewLayout() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.itemSize = CGSize(width: 44 , height: 90)
+        flowLayout.itemSize = CGSize(width: 44 , height: UIScreen.main.bounds.height/8)
         flowLayout.minimumLineSpacing = 12
         self.weatherCollectionView.setCollectionViewLayout(flowLayout, animated: false)
     }

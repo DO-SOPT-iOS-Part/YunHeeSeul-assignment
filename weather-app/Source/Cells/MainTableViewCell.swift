@@ -20,26 +20,27 @@ class MainTableViewCell: UITableViewCell {
         setStyle()
     }
     
-    override func layoutSubviews() {
-      super.layoutSubviews()
-      contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 6, right: 0))
-    }
+//    override func layoutSubviews() {
+//      super.layoutSubviews()
+//      contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setLayout(){
-        contentView.addSubview(weatherInfoView)
+        addSubview(weatherInfoView)
         [leftStackView, rightStackView].forEach{
             weatherInfoView.addSubview($0)
         }
 
         //[날씨 정보 카드]
         weatherInfoView.snp.makeConstraints{
-            $0.top.bottom.equalTo(self.contentView)
+            $0.top.equalTo(self).offset(10)
+            $0.bottom.equalTo(self).inset(6)
+            $0.width.equalTo(UIScreen.main.bounds.width-16)
             $0.leading.trailing.equalTo(self.contentView).inset(8)
-            $0.height.equalTo(self.contentView)
         }
         
         //나의 위치,날씨 라벨을 담은 좌측 스택뷰
@@ -92,10 +93,6 @@ class MainTableViewCell: UITableViewCell {
         //[날씨 정보 카드]
         weatherInfoView.do{
             $0.image = UIImage(named: "weatherInfo")
-            //addGestureRecognizer 을 통해 만든 gesture를 등록
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(weatherInfoCardTap(_:)))
-            $0.addGestureRecognizer(tapGesture)
-            $0.isUserInteractionEnabled = true
         }
         for i in [myLocation, city, weather] {
             i.backgroundColor = .clear
@@ -155,13 +152,5 @@ class MainTableViewCell: UITableViewCell {
         self.weather.text = data.weather
         self.temperature.text = data.temperature
         self.highNLow.text = data.highNLow
-    }
-    
-    //날씨화면 push
-    @objc
-    func weatherInfoCardTap(_ gesture: UITapGestureRecognizer){
-        print("push")
-//        let weatherVC = WeatherViewController()
-//        self.navigationController?.pushViewController(weatherVC, animated: true)
     }
 }

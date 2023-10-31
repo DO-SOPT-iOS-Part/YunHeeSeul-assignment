@@ -62,7 +62,6 @@ class ViewController: UIViewController {
             $0.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
             $0.tableHeaderView = headerView
             $0.showsVerticalScrollIndicator = false
-            $0.allowsSelection = false
         }
         
         headerView.do{
@@ -90,13 +89,6 @@ class ViewController: UIViewController {
             $0.barTintColor = .clear
         }
     }
-    
-    //날씨화면 push
-    @objc
-    func weatherInfoCardTap(_ gesture: UITapGestureRecognizer){
-        let weatherVC = WeatherViewController()
-        self.navigationController?.pushViewController(weatherVC, animated: true)
-    }
 }
 extension ViewController: UITableViewDelegate{}
 extension ViewController: UITableViewDataSource{
@@ -107,7 +99,13 @@ extension ViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else {return UITableViewCell()}
         cell.bindData(data: WeatherInfoData.weatherInfoData[indexPath.row])
+        cell.selectionStyle = .none
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let weatherVC = WeatherViewController()
+        self.navigationController?.pushViewController(weatherVC, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
