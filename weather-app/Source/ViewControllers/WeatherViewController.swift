@@ -21,6 +21,7 @@ class WeatherViewController: UIViewController {
     private var container = UIView()
     
     private var weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var forecastCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +30,13 @@ class WeatherViewController: UIViewController {
         setViewLayout()
         setDetail()
         setCollectionViewLayout()
+        setForecastViewLayout()
     }
     
     func setViewLayout(){
-        self.view.addSubViews(backgroundView, scrollView)
+        self.view.addSubViews(backgroundView, scrollView,divider2,bottomStackView)
         scrollView.addSubViews(contentView)
-        contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, divider2, bottomStackView)
+        contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, forecastCollectionView)
         infoCard.addSubViews(weatherInfo, divider1, weatherCollectionView)
 
         [mapBtn, container, mainBtn].forEach {
@@ -49,9 +51,18 @@ class WeatherViewController: UIViewController {
             $0.top.bottom.leading.trailing.equalTo(view)
         }
 
+        //[화면 하단] 구분선
+        divider2.snp.makeConstraints{
+            $0.bottom.equalTo(backgroundView).inset(82)
+            $0.leading.trailing.equalTo(contentView)
+            $0.height.equalTo(0.4)
+        }
+        
         //스크롤뷰
         scrollView.snp.makeConstraints{
-            $0.top.bottom.leading.trailing.equalTo(safeArea)
+            $0.top.equalTo(view)
+            $0.leading.trailing.equalTo(safeArea)
+            $0.bottom.equalTo(divider2.snp.top)
         }
 
         //컨텐트뷰
@@ -78,10 +89,11 @@ class WeatherViewController: UIViewController {
             $0.height.equalTo(24)
         }
         
-        //[화면 중앙] 시간 별 날씨 정보 카드
+        //[화면 중앙]
+        //시간 별 날씨 정보 카드
         infoCard.snp.makeConstraints{
             $0.top.equalTo(highNLow.snp.bottom).offset(60)
-            $0.leading.trailing.equalTo(contentView).inset(16)
+            $0.leading.trailing.equalTo(contentView).inset(20)
             $0.width.equalTo(UIScreen.main.bounds.width-32)
             $0.height.equalTo(UIScreen.main.bounds.height/4)
         }
@@ -92,7 +104,6 @@ class WeatherViewController: UIViewController {
             $0.width.equalTo(infoCard.bounds.width-24)
             $0.height.equalTo(60)
         }
-
         //날씨 정보 카드 내 구분선
         divider1.snp.makeConstraints{
             $0.top.equalTo(weatherInfo.snp.bottom).offset(6)
@@ -103,16 +114,15 @@ class WeatherViewController: UIViewController {
         //시간 별 날씨 collectionview
         weatherCollectionView.snp.makeConstraints{
             $0.top.equalTo(divider1.snp.bottom)
-            $0.bottom.equalTo(infoCard)
             $0.leading.trailing.bottom.equalTo(infoCard).inset(10)
         }
         
-        
-        //[화면 하단] 구분선
-        divider2.snp.makeConstraints{
-            $0.bottom.equalTo(backgroundView).inset(82)
-            $0.leading.trailing.equalTo(contentView)
-            $0.height.equalTo(0.4)
+        //10일간 일기예보 collectionview
+        forecastCollectionView.snp.makeConstraints{
+            $0.top.equalTo(infoCard.snp.bottom).offset(20)
+            $0.height.equalTo(675)
+            $0.bottom.equalTo(contentView)
+            $0.leading.trailing.equalTo(contentView).inset(20)
         }
 
         //[화면 하단] 버튼들을 담은 스택뷰
@@ -179,6 +189,18 @@ class WeatherViewController: UIViewController {
             $0.delegate = self
         }
 
+        //10일간 일기예보 collectionview
+        forecastCollectionView.do{
+            $0.isScrollEnabled = false
+            $0.layer.cornerRadius = 15
+            $0.layer.borderWidth = 0.5
+            $0.layer.backgroundColor = UIColor(red: 0.175, green: 0.201, blue: 0.249, alpha: 0.2).cgColor
+            $0.layer.borderColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.25).cgColor
+            $0.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: ForecastCollectionViewCell.identifier)
+            $0.dataSource = self
+            $0.delegate = self
+        }
+        
         //[화면 하단]
         //구분선
         divider2.do{
@@ -208,6 +230,13 @@ class WeatherViewController: UIViewController {
         flowLayout.minimumLineSpacing = 12
         self.weatherCollectionView.setCollectionViewLayout(flowLayout, animated: false)
     }
+    private func setForecastViewLayout(){
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 0.5
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40 , height: 55.5)
+        self.forecastCollectionView.setCollectionViewLayout(flowLayout, animated: false)
+    }
     
     
     //폰트 세팅
@@ -227,12 +256,22 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UICollectionViewDelegate{}
 extension WeatherViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return HourlyWeatherData.hourlyWeatherData.count
+        if collectionView == weatherCollectionView {
+            return HourlyWeatherData.hourlyWeatherData.count
+        }else{
+            return ForecastData.forecastData.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
-        cell.bindData(data: HourlyWeatherData.hourlyWeatherData[indexPath.row])
-        return cell
+        if collectionView == weatherCollectionView {
+            guard let weatherCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
+            weatherCell.bindData(data: HourlyWeatherData.hourlyWeatherData[indexPath.row])
+            return weatherCell
+        }else{
+            guard let forecastCell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.identifier, for: indexPath) as? ForecastCollectionViewCell else {return UICollectionViewCell()}
+            forecastCell.bindData(data: ForecastData.forecastData[indexPath.row])
+            return forecastCell
+        }
     }
 }
