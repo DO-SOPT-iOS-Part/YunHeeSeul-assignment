@@ -102,6 +102,8 @@ class ForecastCollectionViewCell: UICollectionViewCell {
                 $0.tintColor = UIColor(red: 0.973, green: 0.843, blue: 0.29, alpha: 1)
             }else if $0.image == UIImage(systemName: "cloud.rain.fill"){
                 $0.tintColor = .white
+            }else {
+                $0.image?.withRenderingMode(.alwaysOriginal)
             }
         }
         
