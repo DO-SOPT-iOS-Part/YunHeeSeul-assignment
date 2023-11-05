@@ -12,7 +12,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setLayout()
         setStyle()
-//        set
     }
     
     required init?(coder: NSCoder) {

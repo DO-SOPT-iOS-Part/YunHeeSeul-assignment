@@ -19,7 +19,6 @@ class ForecastCollectionReusableView: UICollectionReusableView {
         [calendar, forecastLabel].forEach{
             self.addSubview($0)
         }
-        
         //일기예보 아이콘
         calendar.snp.makeConstraints{
             $0.top.bottom.equalToSuperview().inset(8)
@@ -32,8 +31,6 @@ class ForecastCollectionReusableView: UICollectionReusableView {
             $0.leading.equalTo(calendar.snp.trailing).offset(5)
             $0.height.equalTo(24)
         }
-        
-  
     }
     private func setStyle(){
         calendar.do{

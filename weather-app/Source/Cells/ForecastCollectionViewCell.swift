@@ -33,7 +33,6 @@ class ForecastCollectionViewCell: UICollectionViewCell {
                 $0.bottom.equalTo(divider.snp.top)
             }
         }
-        
         container.addSubview(weatherIcon)
         
         day.snp.makeConstraints{
@@ -80,7 +79,6 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         percentage.do{
             $0.textColor = UIColor(red: 0.506, green: 0.812, blue: 0.98, alpha: 1)
             $0.font = UIFont(name: "SFProDisplay-Semibold", size: 15)
-
         }
         lowest.do{
             $0.alpha = 0.3
@@ -96,17 +94,11 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func setIconStyle(text: String){
+    private func setIconStyle(text: String, icon: String){
         weatherIcon.do{
-            if $0.image == UIImage(systemName: "sun.max.fill") {
-                $0.tintColor = UIColor(red: 0.973, green: 0.843, blue: 0.29, alpha: 1)
-            }else if $0.image == UIImage(systemName: "cloud.rain.fill"){
-                $0.tintColor = .white
-            }else {
-                $0.image?.withRenderingMode(.alwaysOriginal)
-            }
+            $0.image = UIImage(systemName: icon)?.withRenderingMode(.alwaysOriginal)
+            $0.tintColor = UIColor(red: 0.973, green: 0.843, blue: 0.29, alpha: 1)
         }
-        
         if !text.isEmpty {
             container.addSubview(percentage)
             weatherIcon.snp.makeConstraints{
@@ -136,6 +128,6 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         self.highest.text = data.highest
         
         guard let text = percentage.text else {return}
-        setIconStyle(text: text)
+        setIconStyle(text: text, icon: data.weatherIcon)
     }
 }
