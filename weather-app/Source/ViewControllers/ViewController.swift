@@ -110,7 +110,9 @@ extension ViewController: UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pushData = data[indexPath.row]
         let weatherVC = WeatherViewController()
+        weatherVC.setInfo(myLocation: pushData.myLocation, temperature: pushData.temperature, weather: pushData.weather, highNLow: pushData.highNLow)
         self.navigationController?.pushViewController(weatherVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: false)
     }

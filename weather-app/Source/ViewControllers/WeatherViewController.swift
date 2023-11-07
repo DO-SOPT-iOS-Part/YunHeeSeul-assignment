@@ -158,10 +158,10 @@ class WeatherViewController: UIViewController {
                 $0.width.leading.trailing.equalTo(contentView)
             }
         }
-        setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: "의정부시")
-        setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: "21º")
-        setFont(label: weather, fontName: "SFProDisplay-Regular", size: 24, text: "흐림")
-        setFont(label: highNLow, fontName: "SFProDisplay-Medium", size: 20, text: "최고:29º 최저:15º")
+        setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: self.myLocation.text!)
+        setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: self.temperature.text!)
+        setFont(label: weather, fontName: "SFProDisplay-Regular", size: 24, text: self.weather.text!)
+        setFont(label: highNLow, fontName: "SFProDisplay-Medium", size: 20, text: self.highNLow.text!)
         
         //[화면 중앙]
         //시간 별 날씨 정보 카드
@@ -253,6 +253,13 @@ class WeatherViewController: UIViewController {
     func setFont(label: UILabel, fontName: String, size: CGFloat, text: String){
         label.font = UIFont(name: fontName, size: size)
         label.text = text
+    }
+    
+    func setInfo(myLocation: String, temperature: String, weather: String, highNLow: String){
+        self.myLocation.text = myLocation
+        self.temperature.text = temperature
+        self.weather.text = weather
+        self.highNLow.text = highNLow
     }
     
     //메인화면 pop
