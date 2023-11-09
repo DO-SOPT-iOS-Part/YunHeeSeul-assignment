@@ -73,12 +73,7 @@ class ViewController: UIViewController {
         headerView.layoutIfNeeded()
 
         menuBtn.setBackgroundImage(UIImage(named: "menu"), for: .normal)
-        titleText.do{
-            $0.text = "날씨"
-            $0.font = UIFont(name: "SFProDisplay-Bold", size: 36)
-            $0.backgroundColor = .black
-            $0.textColor = .white
-        }
+        titleText.setLabel(font: .bold(size: 36), bgColor: .black, textColor: .white, text: "날씨", textAlignment: .left)
 
         //[서치바]
         searchBar.do{

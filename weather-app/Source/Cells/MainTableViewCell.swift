@@ -19,12 +19,7 @@ class MainTableViewCell: UITableViewCell {
         setLayout()
         setStyle()
     }
-    
-//    override func layoutSubviews() {
-//      super.layoutSubviews()
-//      contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
-//    }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -91,14 +86,7 @@ class MainTableViewCell: UITableViewCell {
     private func setStyle(){
         self.backgroundColor = .black
         //[날씨 정보 카드]
-        weatherInfoView.do{
-            $0.image = UIImage(named: "weatherInfo")
-        }
-        for i in [myLocation, city, weather] {
-            i.backgroundColor = .clear
-            i.textColor = .white
-            i.adjustsFontSizeToFitWidth = true
-        }
+        weatherInfoView.image = UIImage(named: "weatherInfo")
         
         //나의 위치,날씨 라벨을 담은 좌측 스택뷰
         leftStackView.do{
@@ -108,18 +96,10 @@ class MainTableViewCell: UITableViewCell {
             $0.layer.cornerRadius = 10
             $0.isLayoutMarginsRelativeArrangement = true
         }
-        myLocation.do{
-            $0.text = "나의 위치"
-            $0.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        }
-        city.do{
-            $0.text = "의정부시"
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-        }
-        weather.do{
-            $0.text = "흐림"
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 16)
-        }
+        myLocation.setLabel(font: .bold(size: 24), bgColor: .clear, textColor: .white, text: "", textAlignment: .left)
+        city.setLabel(font: .medium(size: 17), bgColor: .clear, textColor: .white, text: "", textAlignment: .left)
+        weather.setLabel(font: .medium(size: 16), bgColor: .clear, textColor: .white, text: "", textAlignment: .left)
+
         //기온, 최고/최저 기온 라벨을 담은 우측 스택뷰
         rightStackView.do{
             $0.axis = .vertical
@@ -128,22 +108,8 @@ class MainTableViewCell: UITableViewCell {
             $0.layer.cornerRadius = 10
             $0.isLayoutMarginsRelativeArrangement = true
         }
-        for i in [temperature, highNLow] {
-            rightStackView.addArrangedSubview(i)
-            i.backgroundColor = .clear
-            i.textColor = .white
-        }
-        temperature.do{
-            $0.text = "21º"
-            $0.textAlignment = .right
-            $0.font = UIFont(name: "SFProDisplay-Light", size: 52)
-
-        }
-        highNLow.do{
-            $0.textAlignment = .right
-            $0.text = "최고:29º 최저:15º"
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 15)
-        }
+        temperature.setLabel(font: .light(size: 52), bgColor: .clear, textColor: .white, text: "", textAlignment: .right)
+        highNLow.setLabel(font: .medium(size: 15), bgColor: .clear, textColor: .white, text: "", textAlignment: .right)
     }
     
     func bindData(data: WeatherInfoData){

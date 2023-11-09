@@ -1,10 +1,3 @@
-//
-//  WeatherInfoData.swift
-//  weather-app
-//
-//  Created by 윤희슬 on 2023/10/30.
-//
-
 import Foundation
 
 struct WeatherInfoData{

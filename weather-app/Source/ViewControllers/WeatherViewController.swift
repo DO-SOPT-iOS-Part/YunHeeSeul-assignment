@@ -150,18 +150,14 @@ class WeatherViewController: UIViewController {
         //[화면 상단]
         //위치, 기온, 날씨, 최고/최저 기온
         for i in [myLocation, temperature, weather, highNLow] {
-            i.textColor = .white
-            i.backgroundColor = .clear
-            i.adjustsFontSizeToFitWidth = true
-            i.textAlignment = .center
             i.snp.makeConstraints{
                 $0.width.leading.trailing.equalTo(contentView)
             }
         }
-        setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: self.myLocation.text!)
-        setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: self.temperature.text!)
-        setFont(label: weather, fontName: "SFProDisplay-Regular", size: 24, text: self.weather.text!)
-        setFont(label: highNLow, fontName: "SFProDisplay-Medium", size: 20, text: self.highNLow.text!)
+        myLocation.setLabel(font: .regular(size: 36), bgColor: .clear, textColor: .white, text: self.myLocation.text!, textAlignment: .center)
+        temperature.setLabel(font: .thin(size: 102), bgColor: .clear, textColor: .white, text: self.temperature.text!, textAlignment: .center)
+        weather.setLabel(font: .regular(size: 24), bgColor: .clear, textColor: .white, text: self.weather.text!, textAlignment: .center)
+        highNLow.setLabel(font: .medium(size: 20), bgColor: .clear, textColor: .white, text: self.highNLow.text!, textAlignment: .center)
         
         //[화면 중앙]
         //시간 별 날씨 정보 카드
@@ -171,11 +167,11 @@ class WeatherViewController: UIViewController {
             $0.layer.borderWidth = 0.5
             $0.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
         }
-        //날씨 설명 라벨
+        //날씨 설명 텍스트뷰
         weatherInfo.do{
             $0.backgroundColor = .clear
             $0.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
-            $0.font = UIFont(name: "SFProDisplay-Regular", size: 18)
+            $0.font = .regular(size: 18)
             $0.textColor = .white
             $0.textAlignment = .left
         }
@@ -253,6 +249,13 @@ class WeatherViewController: UIViewController {
     func setFont(label: UILabel, fontName: String, size: CGFloat, text: String){
         label.font = UIFont(name: fontName, size: size)
         label.text = text
+    }
+    
+    func setLabel(label: UILabel, font: UIFont ,bgColor: UIColor, textColor: UIColor ,text: String, textAlignment: NSTextAlignment){
+        label.text = text
+        label.font = font
+        label.backgroundColor = bgColor
+        label.textAlignment = textAlignment
     }
     
     func setInfo(myLocation: String, temperature: String, weather: String, highNLow: String){

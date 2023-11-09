@@ -37,16 +37,8 @@ class WeatherCollectionViewCell: UICollectionViewCell {
             $0.distribution = .fillEqually
             $0.spacing = 12
         }
-        timeLabel.do{
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-            $0.textColor = .white
-            $0.textAlignment = .center
-        }
-        tempLabel.do{
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-            $0.textColor = .white
-            $0.textAlignment = .center
-        }
+        timeLabel.setLabel(font: .medium(size: 17), bgColor: .clear, textColor: .white, text: "", textAlignment: .center)
+        tempLabel.setLabel(font: .medium(size: 22), bgColor: .clear, textColor: .white, text: "", textAlignment: .center)
     }
     
     func bindData(data: HourlyWeatherData){

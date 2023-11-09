@@ -72,23 +72,10 @@ class ForecastCollectionViewCell: UICollectionViewCell {
     
     private func setStyle(){
         contentView.backgroundColor = .clear
-        day.do{
-            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-        }
-        percentage.do{
-            $0.textColor = UIColor(red: 0.506, green: 0.812, blue: 0.98, alpha: 1)
-            $0.font = UIFont(name: "SFProDisplay-Semibold", size: 15)
-        }
-        lowest.do{
-            $0.alpha = 0.3
-            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-        }
-        highest.do{
-            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-            $0.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-        }
+        day.setLabel(font: .medium(size: 22), bgColor: .clear, textColor: .white, text: "", textAlignment: .left)
+        percentage.setLabel(font: .semibold(size: 15), bgColor: .clear, textColor: UIColor(red: 0.506, green: 0.812, blue: 0.98, alpha: 1), text: "", textAlignment: .left)
+        lowest.setLabel(font: .medium(size: 22), bgColor: .clear, textColor: UIColor(red: 1, green: 1, blue: 1, alpha: 0.3), text: "", textAlignment: .left)
+        highest.setLabel(font: .medium(size: 22), bgColor: .clear, textColor: .white, text: "", textAlignment: .left)
         divider.do{
             $0.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
         }
