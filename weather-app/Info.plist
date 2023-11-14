@@ -10,6 +10,7 @@
 		<string>SF-Pro-Display-Regular.otf</string>
 		<string>SF-Pro-Display-Thin.otf</string>
 		<string>SF-Pro-Display-Light.otf</string>
+		<string>SF-Pro-Display-Semibold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

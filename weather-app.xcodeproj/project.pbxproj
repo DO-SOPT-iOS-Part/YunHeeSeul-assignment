@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA2E9F452AEEB5220090BC15 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA2E9F442AEEB5220090BC15 /* SnapKit */; };
+		CA2E9F482AEEB5310090BC15 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CA2E9F472AEEB5310090BC15 /* Then */; };
 		CA4DDB512AE6DFEC00BD399A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */; };
 		CA4DDB532AE6E02F00BD399A /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */; };
 		CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8453232ADD999800A3109A /* AppDelegate.swift */; };
@@ -21,6 +23,16 @@
 		CABB51BE2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51BD2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf */; };
 		CABB51C02ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */; };
 		CABB51C22ADDB6550074ACDD /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CABB51C12ADDB6550074ACDD /* SF-Pro-Display-Regular.otf */; };
+		CADB77E62AFD428300CD3547 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB77E52AFD428300CD3547 /* UIFont.swift */; };
+		CADB77EA2AFD496500CD3547 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB77E92AFD496500CD3547 /* UILabel.swift */; };
+		CAE6F2502AEF8D380081430D /* WeatherInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F24F2AEF8D380081430D /* WeatherInfoData.swift */; };
+		CAE6F2522AEF8E490081430D /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F2512AEF8E490081430D /* MainTableViewCell.swift */; };
+		CAE6F2562AF0E1690081430D /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F2552AF0E1690081430D /* WeatherCollectionViewCell.swift */; };
+		CAE6F2582AF0E38B0081430D /* HourlyWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F2572AF0E38B0081430D /* HourlyWeatherData.swift */; };
+		CAE6F25A2AF169330081430D /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F2592AF169330081430D /* ForecastCollectionViewCell.swift */; };
+		CAE6F25C2AF1731C0081430D /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CAE6F25B2AF1731C0081430D /* SF-Pro-Display-Semibold.otf */; };
+		CAE6F25E2AF173E80081430D /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F25D2AF173E80081430D /* ForecastData.swift */; };
+		CAE6F2612AF38B960081430D /* ForecastCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE6F2602AF38B960081430D /* ForecastCollectionReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +52,16 @@
 		CABB51BD2ADDB63D0074ACDD /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
 		CABB51C12ADDB6550074ACDD /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		CADB77E52AFD428300CD3547 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		CADB77E92AFD496500CD3547 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		CAE6F24F2AEF8D380081430D /* WeatherInfoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoData.swift; sourceTree = "<group>"; };
+		CAE6F2512AEF8E490081430D /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		CAE6F2552AF0E1690081430D /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		CAE6F2572AF0E38B0081430D /* HourlyWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherData.swift; sourceTree = "<group>"; };
+		CAE6F2592AF169330081430D /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
+		CAE6F25B2AF1731C0081430D /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
+		CAE6F25D2AF173E80081430D /* ForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastData.swift; sourceTree = "<group>"; };
+		CAE6F2602AF38B960081430D /* ForecastCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA2E9F452AEEB5220090BC15 /* SnapKit in Frameworks */,
+				CA2E9F482AEEB5310090BC15 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +110,8 @@
 			children = (
 				CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */,
 				CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */,
+				CADB77E52AFD428300CD3547 /* UIFont.swift */,
+				CADB77E92AFD496500CD3547 /* UILabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -93,6 +119,9 @@
 		CA8735E22AE44126001E136E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				CAE6F25F2AF38B740081430D /* Views */,
+				CAE6F24E2AEF8B8E0081430D /* Models */,
+				CAE6F24D2AEF8B810081430D /* Cells */,
 				CA8453232ADD999800A3109A /* AppDelegate.swift */,
 				CA8453252ADD999800A3109A /* SceneDelegate.swift */,
 				CA8735E32AE4413C001E136E /* ViewControllers */,
@@ -112,6 +141,7 @@
 		CABB519D2ADD9F540074ACDD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				CAE6F25B2AF1731C0081430D /* SF-Pro-Display-Semibold.otf */,
 				CA871B462AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf */,
 				CABB51C12ADDB6550074ACDD /* SF-Pro-Display-Regular.otf */,
 				CABB51BF2ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf */,
@@ -131,6 +161,34 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		CAE6F24D2AEF8B810081430D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CAE6F2512AEF8E490081430D /* MainTableViewCell.swift */,
+				CAE6F2552AF0E1690081430D /* WeatherCollectionViewCell.swift */,
+				CAE6F2592AF169330081430D /* ForecastCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CAE6F24E2AEF8B8E0081430D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CAE6F24F2AEF8D380081430D /* WeatherInfoData.swift */,
+				CAE6F2572AF0E38B0081430D /* HourlyWeatherData.swift */,
+				CAE6F25D2AF173E80081430D /* ForecastData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CAE6F25F2AF38B740081430D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CAE6F2602AF38B960081430D /* ForecastCollectionReusableView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,6 +205,10 @@
 			dependencies = (
 			);
 			name = "weather-app";
+			packageProductDependencies = (
+				CA2E9F442AEEB5220090BC15 /* SnapKit */,
+				CA2E9F472AEEB5310090BC15 /* Then */,
+			);
 			productName = "weather-app";
 			productReference = CA8453202ADD999800A3109A /* weather-app.app */;
 			productType = "com.apple.product-type.application";
@@ -175,6 +237,10 @@
 				Base,
 			);
 			mainGroup = CA8453172ADD999800A3109A;
+			packageReferences = (
+				CA2E9F432AEEB5220090BC15 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CA2E9F462AEEB5310090BC15 /* XCRemoteSwiftPackageReference "Then" */,
+			);
 			productRefGroup = CA8453212ADD999800A3109A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -195,6 +261,7 @@
 				CABB51C02ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf in Resources */,
 				CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */,
 				CABB51BC2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf in Resources */,
+				CAE6F25C2AF1731C0081430D /* SF-Pro-Display-Semibold.otf in Resources */,
 				CA84532D2ADD999900A3109A /* Assets.xcassets in Resources */,
 				CABB51C22ADDB6550074ACDD /* SF-Pro-Display-Regular.otf in Resources */,
 			);
@@ -207,11 +274,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE6F2612AF38B960081430D /* ForecastCollectionReusableView.swift in Sources */,
+				CAE6F2562AF0E1690081430D /* WeatherCollectionViewCell.swift in Sources */,
 				CA8453282ADD999800A3109A /* ViewController.swift in Sources */,
 				CA871B452ADFDE78003C7EA8 /* WeatherViewController.swift in Sources */,
+				CAE6F2582AF0E38B0081430D /* HourlyWeatherData.swift in Sources */,
+				CAE6F25A2AF169330081430D /* ForecastCollectionViewCell.swift in Sources */,
+				CAE6F2522AEF8E490081430D /* MainTableViewCell.swift in Sources */,
 				CA4DDB512AE6DFEC00BD399A /* UIView+Extensions.swift in Sources */,
+				CAE6F2502AEF8D380081430D /* WeatherInfoData.swift in Sources */,
 				CA4DDB532AE6E02F00BD399A /* UITextField+Extensions.swift in Sources */,
+				CADB77EA2AFD496500CD3547 /* UILabel.swift in Sources */,
+				CADB77E62AFD428300CD3547 /* UIFont.swift in Sources */,
 				CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */,
+				CAE6F25E2AF173E80081430D /* ForecastData.swift in Sources */,
 				CA8453262ADD999800A3109A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +496,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA2E9F432AEEB5220090BC15 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		CA2E9F462AEEB5310090BC15 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA2E9F442AEEB5220090BC15 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA2E9F432AEEB5220090BC15 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		CA2E9F472AEEB5310090BC15 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA2E9F462AEEB5310090BC15 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CA8453182ADD999800A3109A /* Project object */;
 }

@@ -1,11 +1,5 @@
-//
-//  WeatherViewController.swift
-//  weather-app
-//
-//  Created by 윤희슬 on 2023/10/18.
-//
-
 import UIKit
+import SnapKit
 
 class WeatherViewController: UIViewController {
     private var backgroundView = UIImageView()
@@ -18,8 +12,6 @@ class WeatherViewController: UIViewController {
     private var infoCard = UIView()
     private var weatherInfo = UITextView()
     private var divider1 = UIView()
-    private var weatherScrollView = UIScrollView()
-    private var horizontalStackView  = UIStackView()
     private var divider2 = UIView()
     private var bottomStackView = UIStackView()
     private var mapBtn = UIButton()
@@ -28,34 +20,27 @@ class WeatherViewController: UIViewController {
     private var arrowBtn = UIButton()
     private var container = UIView()
     
+    private var weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var forecastCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var headerView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        self.navigationController?.navigationBar.isHidden = true
         self.navigationItem.titleView?.backgroundColor = .clear
         setViewLayout()
         setDetail()
+        setCollectionViewLayout()
+        setForecastViewLayout()
     }
     
     func setViewLayout(){
-        self.view.addSubViews(backgroundView, scrollView)
+        self.view.addSubViews(backgroundView, scrollView,divider2,bottomStackView)
         scrollView.addSubViews(contentView)
-        contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, divider2, bottomStackView)
-        infoCard.addSubViews(weatherInfo, divider1, weatherScrollView)
-        weatherScrollView.addSubViews(horizontalStackView)
-        //시간 별 날씨 정보를 담은 스택뷰의 아이템 생성
-        [setStackViewItem(time: "Now", icon: "moonNcloud", temperature: "21º"),
-         setStackViewItem(time: "10시", icon: "rain", temperature: "21º"),
-         setStackViewItem(time: "11시", icon: "heavyRain", temperature: "19º"),
-         setStackViewItem(time: "12시", icon: "thunder", temperature: "19º"),
-         setStackViewItem(time: "13시", icon: "rainNsun", temperature: "19º"),
-         setStackViewItem(time: "14시", icon: "moonNcloud", temperature: "18º"),
-         setStackViewItem(time: "15시", icon: "rain", temperature: "18º"),
-         setStackViewItem(time: "16시", icon: "heavyRain", temperature: "18º"),
-         setStackViewItem(time: "17시", icon: "thunder", temperature: "18º"),
-         setStackViewItem(time: "18시", icon: "rainNsun", temperature: "18º")].forEach{
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            horizontalStackView.addArrangedSubview($0)
-        }
+        contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, forecastCollectionView)
+        infoCard.addSubViews(weatherInfo, divider1, weatherCollectionView)
+        
         [mapBtn, container, mainBtn].forEach {
             bottomStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -64,86 +49,97 @@ class WeatherViewController: UIViewController {
 
         let safeArea = view.safeAreaLayoutGuide
         //배경이미지뷰
-        NSLayoutConstraint.activate([backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-                                     backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                                     backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                                     backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        backgroundView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.equalTo(view)
+        }
+
+        //[화면 하단] 구분선
+        divider2.snp.makeConstraints{
+            $0.bottom.equalTo(backgroundView).inset(82)
+            $0.leading.trailing.equalTo(contentView)
+            $0.height.equalTo(0.4)
+        }
+        
         //스크롤뷰
-        NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-                                     scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-                                     scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-                                     scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)])
+        scrollView.snp.makeConstraints{
+            $0.top.equalTo(view)
+            $0.leading.trailing.equalTo(safeArea)
+            $0.bottom.equalTo(divider2.snp.top)
+        }
+
         //컨텐트뷰
-        NSLayoutConstraint.activate([contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                                     contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-                                     contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-                                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-                                    ])
-        //컨텐트뷰 height 지정함으로써 수직 스크롤로 지정
-        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
+        contentView.snp.makeConstraints{
+            $0.top.bottom.leading.trailing.width.equalTo(scrollView)
+            $0.height.greaterThanOrEqualTo(view).priority(.low)
+        }
         
         //[화면 상단] 위치, 기온, 날씨, 최고/최저 기온
-        NSLayoutConstraint.activate([myLocation.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-                                     myLocation.heightAnchor.constraint(equalToConstant: 40),
-                                     temperature.topAnchor.constraint(equalTo: myLocation.bottomAnchor, constant: 4),
-                                     temperature.heightAnchor.constraint(equalToConstant: 110),
-                                     weather.topAnchor.constraint(equalTo: temperature.bottomAnchor, constant: 4),
-                                     weather.heightAnchor.constraint(equalToConstant: 30),
-                                     highNLow.topAnchor.constraint(equalTo: weather.bottomAnchor, constant: 4),
-                                     highNLow.heightAnchor.constraint(equalToConstant: 24)])
+        myLocation.snp.makeConstraints{
+            $0.top.equalTo(contentView).inset(50)
+            $0.height.equalTo(40)
+        }
+        temperature.snp.makeConstraints{
+            $0.top.equalTo(myLocation.snp.bottom).inset(4)
+            $0.height.equalTo(110)
+        }
+        weather.snp.makeConstraints{
+            $0.top.equalTo(temperature.snp.bottom).inset(4)
+            $0.height.equalTo(24)
+        }
+        highNLow.snp.makeConstraints{
+            $0.top.equalTo(weather.snp.bottom).offset(4)
+            $0.height.equalTo(24)
+        }
         
-        //[화면 중앙] 시간 별 날씨 정보 카드
-        NSLayoutConstraint.activate([infoCard.topAnchor.constraint(equalTo: highNLow.bottomAnchor, constant: 60),
-                                     infoCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                                     infoCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-                                     infoCard.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-32),
-                                     infoCard.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height/4)])
+        //[화면 중앙]
+        //시간 별 날씨 정보 카드
+        infoCard.snp.makeConstraints{
+            $0.top.equalTo(highNLow.snp.bottom).offset(60)
+            $0.leading.trailing.equalTo(contentView).inset(20)
+            $0.width.equalTo(UIScreen.main.bounds.width-32)
+            $0.height.equalTo(UIScreen.main.bounds.height/4)
+        }
         //날씨 정보 카드 내 날씨 설명 라벨
-        NSLayoutConstraint.activate([weatherInfo.topAnchor.constraint(equalTo: infoCard.topAnchor, constant: 6),
-                                     weatherInfo.leadingAnchor.constraint(equalTo: infoCard.leadingAnchor, constant: 12),
-                                     weatherInfo.trailingAnchor.constraint(equalTo: infoCard.trailingAnchor, constant: -12),
-                                     weatherInfo.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
-                                     weatherInfo.heightAnchor.constraint(equalToConstant: 60)])
+        weatherInfo.snp.makeConstraints{
+            $0.top.equalTo(infoCard).inset(6)
+            $0.leading.trailing.equalTo(infoCard).inset(12)
+            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.height.equalTo(60)
+        }
         //날씨 정보 카드 내 구분선
-        NSLayoutConstraint.activate([divider1.topAnchor.constraint(equalTo: weatherInfo.bottomAnchor, constant: 6),
-                                     divider1.leadingAnchor.constraint(equalTo: infoCard.leadingAnchor, constant: 12),
-                                     divider1.trailingAnchor.constraint(equalTo: infoCard.trailingAnchor, constant: -12),
-                                     divider1.widthAnchor.constraint(equalToConstant: infoCard.bounds.width-24),
-                                     divider1.heightAnchor.constraint(equalToConstant: 0.5)])
-        //시간 별 날씨 정보를 스크롤 할 수 있는 수평스크롤뷰
-        NSLayoutConstraint.activate([weatherScrollView.topAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.topAnchor, constant: 90),
-                                     weatherScrollView.leadingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.leadingAnchor, constant: 12),
-                                     weatherScrollView.bottomAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-                                     weatherScrollView.trailingAnchor.constraint(equalTo: infoCard.safeAreaLayoutGuide.trailingAnchor, constant: -12)])
-        //시간 별 날씨 정보를 담은 스택뷰
-        NSLayoutConstraint.activate([horizontalStackView.topAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.topAnchor),
-                                     horizontalStackView.leadingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.leadingAnchor),
-                                     horizontalStackView.trailingAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.trailingAnchor),
-                                     horizontalStackView.bottomAnchor.constraint(equalTo: weatherScrollView.contentLayoutGuide.bottomAnchor),
-                                     horizontalStackView.heightAnchor.constraint(equalTo: weatherScrollView.heightAnchor)])
-        let width = horizontalStackView.widthAnchor.constraint(greaterThanOrEqualTo: weatherScrollView.widthAnchor)
-        width.priority = .defaultLow
-        width.isActive = true
+        divider1.snp.makeConstraints{
+            $0.top.equalTo(weatherInfo.snp.bottom).offset(6)
+            $0.leading.trailing.equalTo(infoCard).inset(12)
+            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.height.equalTo(0.5)
+        }
+        //시간 별 날씨 collectionview
+        weatherCollectionView.snp.makeConstraints{
+            $0.top.equalTo(divider1.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(infoCard).inset(10)
+        }
         
-        //[화면 하단] 구분선
-        NSLayoutConstraint.activate([divider2.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -82),
-                                     divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                                     divider2.heightAnchor.constraint(equalToConstant: 0.4)])
+
+        
+        //10일간 일기예보 collectionview
+        forecastCollectionView.snp.makeConstraints{
+            $0.top.equalTo(infoCard.snp.bottom).offset(20)
+            $0.height.equalTo(675)
+            $0.bottom.equalTo(contentView)
+            $0.leading.trailing.equalTo(contentView).inset(20)
+        }
         //[화면 하단] 버튼들을 담은 스택뷰
-        NSLayoutConstraint.activate([bottomStackView.heightAnchor.constraint(equalToConstant: 50),
-                                     bottomStackView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
-                                     bottomStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                                     bottomStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)])
-        NSLayoutConstraint.activate([arrowBtn.topAnchor.constraint(equalTo: container.topAnchor),
-                                     arrowBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-                                     arrowBtn.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-                                     dotBtn.topAnchor.constraint(equalTo: container.topAnchor),
-                                     dotBtn.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-                                     dotBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor)])
+        bottomStackView.snp.makeConstraints{
+            $0.top.equalTo(divider2.snp.bottom)
+            $0.leading.trailing.equalTo(contentView).inset(10)
+            $0.height.equalTo(50)
+        }
+        arrowBtn.snp.makeConstraints{
+            $0.top.bottom.leading.equalTo(container)
+        }
+        dotBtn.snp.makeConstraints{
+            $0.top.bottom.trailing.equalTo(container)
+        }
     }
     
     func setDetail(){
@@ -154,49 +150,75 @@ class WeatherViewController: UIViewController {
         //[화면 상단]
         //위치, 기온, 날씨, 최고/최저 기온
         for i in [myLocation, temperature, weather, highNLow] {
-            i.textColor = .white
-            i.backgroundColor = .clear
-            i.adjustsFontSizeToFitWidth = true
-            i.textAlignment = .center
-            NSLayoutConstraint.activate([i.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-                                         i.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                         i.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+            i.snp.makeConstraints{
+                $0.width.leading.trailing.equalTo(contentView)
+            }
         }
-        setFont(label: myLocation, fontName: "SFProDisplay-Regular", size: 36, text: "의정부시")
-        setFont(label: temperature, fontName: "SFProDisplay-Thin", size: 102, text: "21º")
-        setFont(label: weather, fontName: "SFProDisplay-Regular", size: 24, text: "흐림")
-        setFont(label: highNLow, fontName: "SFProDisplay-Medium", size: 20, text: "최고:29º 최저:15º")
+        myLocation.setLabel(font: .regular(size: 36), bgColor: .clear, textColor: .white, text: self.myLocation.text!, textAlignment: .center)
+        temperature.setLabel(font: .thin(size: 102), bgColor: .clear, textColor: .white, text: self.temperature.text!, textAlignment: .center)
+        weather.setLabel(font: .regular(size: 24), bgColor: .clear, textColor: .white, text: self.weather.text!, textAlignment: .center)
+        highNLow.setLabel(font: .medium(size: 20), bgColor: .clear, textColor: .white, text: self.highNLow.text!, textAlignment: .center)
         
         //[화면 중앙]
         //시간 별 날씨 정보 카드
-        infoCard.backgroundColor = .white .withAlphaComponent(0.01)
-        infoCard.layer.cornerRadius = 15
-        infoCard.layer.borderWidth = 0.5
-        infoCard.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
-        //날씨 설명 라벨
-        weatherInfo.backgroundColor = .clear
-        weatherInfo.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
-        weatherInfo.font = UIFont(name: "SFProDisplay-Regular", size: 18)
-        weatherInfo.textColor = .white
-        weatherInfo.textAlignment = .left
+        infoCard.do{
+            $0.backgroundColor = .white .withAlphaComponent(0.01)
+            $0.layer.cornerRadius = 15
+            $0.layer.borderWidth = 0.5
+            $0.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        }
+        //날씨 설명 텍스트뷰
+        weatherInfo.do{
+            $0.backgroundColor = .clear
+            $0.text = "08:00~09:00에 강우 상태가, 18:00에 한때 흐린 상태가 예상됩니다."
+            $0.font = .regular(size: 18)
+            $0.textColor = .white
+            $0.textAlignment = .left
+        }
         //날씨 정보 카드 내 구분선
-        divider1.backgroundColor = .white.withAlphaComponent(0.3)
-        //시간 별 날씨 정보를 담은 수평 스택뷰
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.distribution = .fillEqually
-        horizontalStackView.spacing = 16
-        horizontalStackView.backgroundColor = .clear
-        horizontalStackView.isLayoutMarginsRelativeArrangement = true
+        divider1.do{
+            $0.backgroundColor = .white.withAlphaComponent(0.3)
+        }
+        //시간 별 날씨 collectionview
+        weatherCollectionView.do{
+            $0.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier:WeatherCollectionViewCell.identifier)
+            $0.backgroundColor = .clear
+            $0.showsHorizontalScrollIndicator = false
+            $0.dataSource = self
+            $0.delegate = self
+        }
+        
+        headerView.do{
+            $0.backgroundColor = .clear
+        }
+
+        //10일간 일기예보 collectionview
+        forecastCollectionView.do{
+            $0.isScrollEnabled = false
+            $0.layer.cornerRadius = 15
+            $0.layer.borderWidth = 0.5
+            $0.layer.backgroundColor = UIColor(red: 0.175, green: 0.201, blue: 0.249, alpha: 0.2).cgColor
+            $0.layer.borderColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.25).cgColor
+            $0.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: ForecastCollectionViewCell.identifier)
+            $0.register(ForecastCollectionReusableView.self,
+                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ForecastCollectionReusableView.identifier)
+            $0.dataSource = self
+            $0.delegate = self
+        }
         
         //[화면 하단]
         //구분선
-        divider2.backgroundColor = .white.withAlphaComponent(0.3)
+        divider2.do{
+            $0.backgroundColor = .white.withAlphaComponent(0.3)
+        }
         //버튼들을 담은 스택뷰
-        bottomStackView.backgroundColor = .clear
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .equalSpacing
-        bottomStackView.backgroundColor = .clear
-        bottomStackView.isLayoutMarginsRelativeArrangement = true
+        bottomStackView.do{
+            $0.backgroundColor = .clear
+            $0.axis = .horizontal
+            $0.distribution = .equalSpacing
+            $0.backgroundColor = .clear
+            $0.isLayoutMarginsRelativeArrangement = true
+        }
         //지도, 점, 화살표, 메인 버튼
         mapBtn.setImage(UIImage(named: "map"), for: .normal)
         arrowBtn.setImage(UIImage(named: "arrow"), for: .normal)
@@ -206,6 +228,22 @@ class WeatherViewController: UIViewController {
         mainBtn.setImage(UIImage(named: "main"), for: .normal)
 
     }
+    private func setCollectionViewLayout() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.itemSize = CGSize(width: 44 , height: UIScreen.main.bounds.height/8)
+        flowLayout.minimumLineSpacing = 12
+        self.weatherCollectionView.setCollectionViewLayout(flowLayout, animated: false)
+    }
+    private func setForecastViewLayout(){
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 0.5
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40 , height: 55.5)
+        flowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40 , height: 40)
+        self.forecastCollectionView.setCollectionViewLayout(flowLayout, animated: false)
+    }
+    
     
     //폰트 세팅
     func setFont(label: UILabel, fontName: String, size: CGFloat, text: String){
@@ -213,43 +251,52 @@ class WeatherViewController: UIViewController {
         label.text = text
     }
     
-    //스택뷰 아이템 생성
-    func setStackViewItem(time: String, icon: String, temperature: String) -> UIStackView {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fillEqually
-        view.spacing = 10
-        
-        let imageView = UIImageView()
-        let image = UIImage(named: icon)
-        imageView.image = image
-        
-        let timeLabel = UILabel()
-        timeLabel.text = time
-        timeLabel.font = UIFont(name: "SFProDisplay-Medium", size: 17)
-        timeLabel.textColor = .white
-        timeLabel.textAlignment = .center
-        
-        let tempLabel = UILabel()
-        tempLabel.text = temperature
-        tempLabel.font = UIFont(name: "SFProDisplay-Medium", size: 22)
-        tempLabel.textColor = .white
-        tempLabel.textAlignment = .center
-        
-        [timeLabel, imageView, tempLabel].forEach {
-            NSLayoutConstraint.activate([$0.widthAnchor.constraint(equalToConstant: 44)])
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addArrangedSubview($0)
-        }
-        return view
+    func setLabel(label: UILabel, font: UIFont ,bgColor: UIColor, textColor: UIColor ,text: String, textAlignment: NSTextAlignment){
+        label.text = text
+        label.font = font
+        label.backgroundColor = bgColor
+        label.textAlignment = textAlignment
+    }
+    
+    func setInfo(myLocation: String, temperature: String, weather: String, highNLow: String){
+        self.myLocation.text = myLocation
+        self.temperature.text = temperature
+        self.weather.text = weather
+        self.highNLow.text = highNLow
     }
     
     //메인화면 pop
     @objc
     func mainButtonTap(_ gesture: UITapGestureRecognizer){
         print("pop")
-        let mainVC = ViewController()
         self.navigationController?.popViewController(animated: true)
     }
 
+}
+extension WeatherViewController: UICollectionViewDelegate{}
+extension WeatherViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == weatherCollectionView {
+            return HourlyWeatherData.hourlyWeatherData.count
+        }else{
+            return ForecastData.forecastData.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == weatherCollectionView {
+            guard let weatherCell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else {return UICollectionViewCell()}
+            weatherCell.bindData(data: HourlyWeatherData.hourlyWeatherData[indexPath.row])
+            return weatherCell
+        }else{
+            guard let forecastCell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.identifier, for: indexPath) as? ForecastCollectionViewCell else {return UICollectionViewCell()}
+            forecastCell.bindData(data: ForecastData.forecastData[indexPath.row])
+            return forecastCell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ForecastCollectionReusableView.identifier, for: indexPath) as? ForecastCollectionReusableView else {return UICollectionReusableView()}
+        return headerView
+    }
 }
