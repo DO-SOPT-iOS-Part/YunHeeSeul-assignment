@@ -18,7 +18,7 @@ class WeatherViewController: UIViewController {
     private var mainBtn = UIButton()
     private var dotBtn = UIButton()
     private var arrowBtn = UIButton()
-    private var container = UIView()
+    private var btnContainer = UIView()
     
     private var weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var forecastCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -41,11 +41,11 @@ class WeatherViewController: UIViewController {
         contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, forecastCollectionView)
         infoCard.addSubViews(weatherInfo, divider1, weatherCollectionView)
         
-        [mapBtn, container, mainBtn].forEach {
+        [mapBtn, btnContainer, mainBtn].forEach {
             bottomStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        container.addSubViews(arrowBtn, dotBtn)
+        btnContainer.addSubViews(arrowBtn, dotBtn)
 
         let safeArea = view.safeAreaLayoutGuide
         //배경이미지뷰
@@ -135,10 +135,10 @@ class WeatherViewController: UIViewController {
             $0.height.equalTo(50)
         }
         arrowBtn.snp.makeConstraints{
-            $0.top.bottom.leading.equalTo(container)
+            $0.top.bottom.leading.equalTo(btnContainer)
         }
         dotBtn.snp.makeConstraints{
-            $0.top.bottom.trailing.equalTo(container)
+            $0.top.bottom.trailing.equalTo(btnContainer)
         }
     }
     
@@ -258,11 +258,11 @@ class WeatherViewController: UIViewController {
         label.textAlignment = textAlignment
     }
     
-    func setInfo(myLocation: String, temperature: String, weather: String, highNLow: String){
+    func setInfo(myLocation: String, temperature: Double, weather: String, high: Double, low: Double){
         self.myLocation.text = myLocation
-        self.temperature.text = temperature
+        self.temperature.text = "\(String(format: "%.0f", temperature))º"
         self.weather.text = weather
-        self.highNLow.text = highNLow
+        self.highNLow.text = "최고:\(String(format: "%.0f", high))º 최저:\(String(format: "%.0f", low))º"
     }
     
     //메인화면 pop
