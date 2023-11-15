@@ -13,6 +13,7 @@
 		CA3D40092B052D2B000061FB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D40082B052D2B000061FB /* Config.swift */; };
 		CA3D400C2B052E04000061FB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D400B2B052E04000061FB /* NetworkError.swift */; };
 		CA3D400E2B052E54000061FB /* GetInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D400D2B052E54000061FB /* GetInfoService.swift */; };
+		CA3D40102B0534DF000061FB /* CurrentWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D400F2B0534DF000061FB /* CurrentWeatherData.swift */; };
 		CA4DDB512AE6DFEC00BD399A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */; };
 		CA4DDB532AE6E02F00BD399A /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */; };
 		CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8453232ADD999800A3109A /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 		CA3D40082B052D2B000061FB /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA3D400B2B052E04000061FB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		CA3D400D2B052E54000061FB /* GetInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInfoService.swift; sourceTree = "<group>"; };
+		CA3D400F2B0534DF000061FB /* CurrentWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherData.swift; sourceTree = "<group>"; };
 		CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		CA8453202ADD999800A3109A /* weather-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weather-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +199,7 @@
 				CAE6F24F2AEF8D380081430D /* WeatherInfoData.swift */,
 				CAE6F2572AF0E38B0081430D /* HourlyWeatherData.swift */,
 				CAE6F25D2AF173E80081430D /* ForecastData.swift */,
+				CA3D400F2B0534DF000061FB /* CurrentWeatherData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				CA4DDB512AE6DFEC00BD399A /* UIView+Extensions.swift in Sources */,
 				CAE6F2502AEF8D380081430D /* WeatherInfoData.swift in Sources */,
 				CA4DDB532AE6E02F00BD399A /* UITextField+Extensions.swift in Sources */,
+				CA3D40102B0534DF000061FB /* CurrentWeatherData.swift in Sources */,
 				CADB77EA2AFD496500CD3547 /* UILabel.swift in Sources */,
 				CA3D400E2B052E54000061FB /* GetInfoService.swift in Sources */,
 				CADB77E62AFD428300CD3547 /* UIFont.swift in Sources */,
