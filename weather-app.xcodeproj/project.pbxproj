@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CA2E9F452AEEB5220090BC15 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA2E9F442AEEB5220090BC15 /* SnapKit */; };
 		CA2E9F482AEEB5310090BC15 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = CA2E9F472AEEB5310090BC15 /* Then */; };
+		CA3D40072B052C6E000061FB /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CA3D40062B052C6E000061FB /* Config.xcconfig */; };
+		CA3D40092B052D2B000061FB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D40082B052D2B000061FB /* Config.swift */; };
 		CA4DDB512AE6DFEC00BD399A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */; };
 		CA4DDB532AE6E02F00BD399A /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */; };
 		CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8453232ADD999800A3109A /* AppDelegate.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA3D40062B052C6E000061FB /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CA3D40082B052D2B000061FB /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		CA4DDB502AE6DFEC00BD399A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		CA4DDB522AE6E02F00BD399A /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		CA8453202ADD999800A3109A /* weather-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "weather-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +84,7 @@
 		CA8453172ADD999800A3109A = {
 			isa = PBXGroup;
 			children = (
+				CA3D40062B052C6E000061FB /* Config.xcconfig */,
 				CA8453222ADD999800A3109A /* weather-app */,
 				CA8453212ADD999800A3109A /* Products */,
 			);
@@ -101,6 +106,7 @@
 				CA84532C2ADD999900A3109A /* Assets.xcassets */,
 				CA84532E2ADD999900A3109A /* LaunchScreen.storyboard */,
 				CA8453312ADD999900A3109A /* Info.plist */,
+				CA3D40082B052D2B000061FB /* Config.swift */,
 			);
 			path = "weather-app";
 			sourceTree = "<group>";
@@ -261,6 +267,7 @@
 				CABB51C02ADDB64A0074ACDD /* SF-Pro-Display-Medium.otf in Resources */,
 				CA871B472AE15B69003C7EA8 /* SF-Pro-Display-Thin.otf in Resources */,
 				CABB51BC2ADDB6280074ACDD /* SF-Pro-Display-Bold.otf in Resources */,
+				CA3D40072B052C6E000061FB /* Config.xcconfig in Resources */,
 				CAE6F25C2AF1731C0081430D /* SF-Pro-Display-Semibold.otf in Resources */,
 				CA84532D2ADD999900A3109A /* Assets.xcassets in Resources */,
 				CABB51C22ADDB6550074ACDD /* SF-Pro-Display-Regular.otf in Resources */,
@@ -287,6 +294,7 @@
 				CADB77EA2AFD496500CD3547 /* UILabel.swift in Sources */,
 				CADB77E62AFD428300CD3547 /* UIFont.swift in Sources */,
 				CA8453242ADD999800A3109A /* AppDelegate.swift in Sources */,
+				CA3D40092B052D2B000061FB /* Config.swift in Sources */,
 				CAE6F25E2AF173E80081430D /* ForecastData.swift in Sources */,
 				CA8453262ADD999800A3109A /* SceneDelegate.swift in Sources */,
 			);
@@ -308,6 +316,7 @@
 /* Begin XCBuildConfiguration section */
 		CA8453322ADD999900A3109A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA3D40062B052C6E000061FB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -368,6 +377,7 @@
 		};
 		CA8453332ADD999900A3109A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA3D40062B052C6E000061FB /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
