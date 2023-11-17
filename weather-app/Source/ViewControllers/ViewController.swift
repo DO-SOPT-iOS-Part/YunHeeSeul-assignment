@@ -89,9 +89,9 @@ class ViewController: UIViewController {
     }
     
     func setData(){
-        var formatterTime = DateFormatter()
+        let formatterTime = DateFormatter()
         formatterTime.dateFormat = "HH:mm"
-        var time = formatterTime.string(from: Date())
+        let time = formatterTime.string(from: Date())
 
         Task{
             for i in city {

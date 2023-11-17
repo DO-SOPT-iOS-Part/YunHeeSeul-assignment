@@ -96,21 +96,21 @@ class WeatherViewController: UIViewController {
         infoCard.snp.makeConstraints{
             $0.top.equalTo(highNLow.snp.bottom).offset(60)
             $0.leading.trailing.equalTo(contentView).inset(20)
-            $0.width.equalTo(UIScreen.main.bounds.width-32)
-            $0.height.equalTo(UIScreen.main.bounds.height/4)
+            $0.width.equalTo(UIScreen.main.bounds.width - 32)
+            $0.height.equalTo(UIScreen.main.bounds.height / 4)
         }
         //날씨 정보 카드 내 날씨 설명 라벨
         weatherInfo.snp.makeConstraints{
             $0.top.equalTo(infoCard).inset(6)
             $0.leading.trailing.equalTo(infoCard).inset(12)
-            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.width.equalTo(infoCard.bounds.width - 24)
             $0.height.equalTo(60)
         }
         //날씨 정보 카드 내 구분선
         divider1.snp.makeConstraints{
             $0.top.equalTo(weatherInfo.snp.bottom).offset(6)
             $0.leading.trailing.equalTo(infoCard).inset(12)
-            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.width.equalTo(infoCard.bounds.width - 24)
             $0.height.equalTo(0.5)
         }
         //시간 별 날씨 collectionview
@@ -118,8 +118,6 @@ class WeatherViewController: UIViewController {
             $0.top.equalTo(divider1.snp.bottom)
             $0.leading.trailing.bottom.equalTo(infoCard).inset(10)
         }
-        
-
         
         //10일간 일기예보 collectionview
         forecastCollectionView.snp.makeConstraints{

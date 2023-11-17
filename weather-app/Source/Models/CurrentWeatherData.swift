@@ -59,3 +59,20 @@ struct Wind: Codable {
     let deg: Int
 }
 
+struct WeatherInfoData{
+    let myLocation : String
+    let city : String
+    let weather : String
+    let temperature : Double
+    let high : Double
+    let low : Double
+    
+    init(myLocation: String, city: String, weather: String, temperature: Double, high: Double, low: Double) {
+        self.myLocation = ConvertCityName(rawValue: myLocation)!.cityName
+        self.city = city
+        self.weather = ConvertWeather(rawValue: weather)!.weather
+        self.temperature = temperature - 273.15
+        self.high = high - 273.15
+        self.low = low - 273.15
+    }
+}
