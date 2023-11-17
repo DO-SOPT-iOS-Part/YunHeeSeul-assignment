@@ -9,15 +9,15 @@ class ViewController: UIViewController {
     private var menuBtn = UIButton()
     private var titleText = UILabel()
     private var searchBar = UISearchBar()
-    private var data: [WeatherInfoData] = WeatherInfoData.weatherInfoData
+    private var city = ["daegu", "busan", "seoul", "sokcho", "suwon", "jeju"]
+    private var data: [WeatherInfoData] = []
     private var filteredData: [WeatherInfoData] = []
     private var isFiltered: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        setDetail()
-        setViewLayout()
+        setData()
     }
     
     func setViewLayout(){
@@ -87,11 +87,29 @@ class ViewController: UIViewController {
             $0.barTintColor = .clear
         }
     }
+    
+    func setData(){
+        let formatterTime = DateFormatter()
+        formatterTime.dateFormat = "HH:mm"
+        let time = formatterTime.string(from: Date())
+
+        Task{
+            for i in city {
+                if let weatherData = try await GetInfoService.shared.GetCurrentWeatherData(city: i){
+                    print("weather : \(weatherData)")
+                    self.data.append(WeatherInfoData.init(myLocation: weatherData.name, city: time, weather: weatherData.weather.first!.main, temperature: weatherData.main.temp, high: weatherData.main.tempMax, low: weatherData.main.tempMin))
+                }
+            }
+            setDetail()
+            setViewLayout()
+        }
+    }
 }
 extension ViewController: UITableViewDelegate{}
 extension ViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltered ? filteredData.count : data.count
+//        print("weather : \(self.data)")
+        return isFiltered ? filteredData.count : self.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,7 +125,7 @@ extension ViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pushData = data[indexPath.row]
         let weatherVC = WeatherViewController()
-        weatherVC.setInfo(myLocation: pushData.myLocation, temperature: pushData.temperature, weather: pushData.weather, highNLow: pushData.highNLow)
+        weatherVC.setInfo(myLocation: pushData.myLocation, temperature: pushData.temperature, weather: pushData.weather, high: pushData.high, low: pushData.low)
         self.navigationController?.pushViewController(weatherVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: false)
     }

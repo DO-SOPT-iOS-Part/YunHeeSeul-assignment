@@ -18,7 +18,7 @@ class WeatherViewController: UIViewController {
     private var mainBtn = UIButton()
     private var dotBtn = UIButton()
     private var arrowBtn = UIButton()
-    private var container = UIView()
+    private var btnContainer = UIView()
     
     private var weatherCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var forecastCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -41,11 +41,11 @@ class WeatherViewController: UIViewController {
         contentView.addSubViews(myLocation, temperature, weather, highNLow, infoCard, forecastCollectionView)
         infoCard.addSubViews(weatherInfo, divider1, weatherCollectionView)
         
-        [mapBtn, container, mainBtn].forEach {
+        [mapBtn, btnContainer, mainBtn].forEach {
             bottomStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        container.addSubViews(arrowBtn, dotBtn)
+        btnContainer.addSubViews(arrowBtn, dotBtn)
 
         let safeArea = view.safeAreaLayoutGuide
         //배경이미지뷰
@@ -96,21 +96,21 @@ class WeatherViewController: UIViewController {
         infoCard.snp.makeConstraints{
             $0.top.equalTo(highNLow.snp.bottom).offset(60)
             $0.leading.trailing.equalTo(contentView).inset(20)
-            $0.width.equalTo(UIScreen.main.bounds.width-32)
-            $0.height.equalTo(UIScreen.main.bounds.height/4)
+            $0.width.equalTo(UIScreen.main.bounds.width - 32)
+            $0.height.equalTo(UIScreen.main.bounds.height / 4)
         }
         //날씨 정보 카드 내 날씨 설명 라벨
         weatherInfo.snp.makeConstraints{
             $0.top.equalTo(infoCard).inset(6)
             $0.leading.trailing.equalTo(infoCard).inset(12)
-            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.width.equalTo(infoCard.bounds.width - 24)
             $0.height.equalTo(60)
         }
         //날씨 정보 카드 내 구분선
         divider1.snp.makeConstraints{
             $0.top.equalTo(weatherInfo.snp.bottom).offset(6)
             $0.leading.trailing.equalTo(infoCard).inset(12)
-            $0.width.equalTo(infoCard.bounds.width-24)
+            $0.width.equalTo(infoCard.bounds.width - 24)
             $0.height.equalTo(0.5)
         }
         //시간 별 날씨 collectionview
@@ -118,8 +118,6 @@ class WeatherViewController: UIViewController {
             $0.top.equalTo(divider1.snp.bottom)
             $0.leading.trailing.bottom.equalTo(infoCard).inset(10)
         }
-        
-
         
         //10일간 일기예보 collectionview
         forecastCollectionView.snp.makeConstraints{
@@ -135,10 +133,10 @@ class WeatherViewController: UIViewController {
             $0.height.equalTo(50)
         }
         arrowBtn.snp.makeConstraints{
-            $0.top.bottom.leading.equalTo(container)
+            $0.top.bottom.leading.equalTo(btnContainer)
         }
         dotBtn.snp.makeConstraints{
-            $0.top.bottom.trailing.equalTo(container)
+            $0.top.bottom.trailing.equalTo(btnContainer)
         }
     }
     
@@ -258,11 +256,11 @@ class WeatherViewController: UIViewController {
         label.textAlignment = textAlignment
     }
     
-    func setInfo(myLocation: String, temperature: String, weather: String, highNLow: String){
+    func setInfo(myLocation: String, temperature: Double, weather: String, high: Double, low: Double){
         self.myLocation.text = myLocation
-        self.temperature.text = temperature
+        self.temperature.text = "\(String(format: "%.0f", temperature))º"
         self.weather.text = weather
-        self.highNLow.text = highNLow
+        self.highNLow.text = "최고:\(String(format: "%.0f", high))º 최저:\(String(format: "%.0f", low))º"
     }
     
     //메인화면 pop

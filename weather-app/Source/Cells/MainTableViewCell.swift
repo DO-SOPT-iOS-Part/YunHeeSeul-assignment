@@ -116,7 +116,7 @@ class MainTableViewCell: UITableViewCell {
         self.myLocation.text = data.myLocation
         self.city.text = data.city
         self.weather.text = data.weather
-        self.temperature.text = data.temperature
-        self.highNLow.text = data.highNLow
+        self.temperature.text = "\(String(format: "%.0f", data.temperature))º"
+        self.highNLow.text = "최고:\(String(format: "%.0f", data.high))º 최저:\(String(format: "%.0f", data.low))º"
     }
 }
